@@ -8,6 +8,7 @@
     "author": "saving-throw",
     "license": "DPCCL",
     "thumbnailUrl": "https://preview.redd.it/new-table-about-to-start-our-first-daggerheart-game-any-v0-6sb0z1s6gvif1.jpeg?width=1080&crop=smart&auto=webp&s=f43bd38427d10dc3dc4e0c52973bd7504d34d75c",
+    "thumbnailWideUrl": "https://www.daggerheart.com/wp-content/uploads/2024/12/HEADER-DH-Limited-Cover-Art-1024x504.png",
     "types": ["CORE", "RULES"],
     "tags": ["fantasy", "daggerheart", "critical-role", "duality-dice"],
     "capabilities": ["character:read", "character:write", "dice:custom"],
