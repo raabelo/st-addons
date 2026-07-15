@@ -1,0 +1,55 @@
+{
+  "addon": {
+    "slug": "dnd5e-core",
+    "name": "D&D 5e Core",
+    "version": "1.0.0",
+    "description": "Core ruleset for Dungeons and Dragons 5th Edition. Defines character schema, ability scores, combat stats, and standard dice mechanics.",
+    "repositoryUrl": "https://github.com/raabelo/st-addons",
+    "author": "saving-throw",
+    "license": "OGL-1.0",
+    "types": ["CORE", "RULES"],
+    "tags": ["fantasy", "official", "dnd", "5e"],
+    "capabilities": ["character:read", "character:write", "dice:custom"],
+    "characterFields": [
+      { "key": "character_name",    "label": "Character Name",    "type": "text",     "section": "identity",       "required": true },
+      { "key": "character_class",   "label": "Class",             "type": "text",     "section": "identity",       "required": true },
+      { "key": "level",             "label": "Level",             "type": "number",   "section": "identity",       "min": 1,  "max": 20, "default": 1 },
+      { "key": "background",        "label": "Background",        "type": "text",     "section": "identity" },
+      { "key": "race",              "label": "Race",              "type": "text",     "section": "identity",       "required": true },
+      { "key": "alignment",         "label": "Alignment",         "type": "select",   "section": "identity",       "options": ["Lawful Good", "Neutral Good", "Chaotic Good", "Lawful Neutral", "True Neutral", "Chaotic Neutral", "Lawful Evil", "Neutral Evil", "Chaotic Evil"] },
+      { "key": "experience_points", "label": "Experience Points", "type": "number",   "section": "identity",       "min": 0, "default": 0 },
+      { "key": "strength",          "label": "Strength",          "type": "number",   "section": "ability_scores", "min": 1, "max": 30, "default": 10 },
+      { "key": "dexterity",         "label": "Dexterity",         "type": "number",   "section": "ability_scores", "min": 1, "max": 30, "default": 10 },
+      { "key": "constitution",      "label": "Constitution",      "type": "number",   "section": "ability_scores", "min": 1, "max": 30, "default": 10 },
+      { "key": "intelligence",      "label": "Intelligence",      "type": "number",   "section": "ability_scores", "min": 1, "max": 30, "default": 10 },
+      { "key": "wisdom",            "label": "Wisdom",            "type": "number",   "section": "ability_scores", "min": 1, "max": 30, "default": 10 },
+      { "key": "charisma",          "label": "Charisma",          "type": "number",   "section": "ability_scores", "min": 1, "max": 30, "default": 10 },
+      { "key": "hit_points",        "label": "Hit Points",        "type": "resource", "section": "combat" },
+      { "key": "armor_class",       "label": "Armor Class",       "type": "number",   "section": "combat",         "min": 0, "default": 10 },
+      { "key": "initiative",        "label": "Initiative",        "type": "number",   "section": "combat",         "default": 0 },
+      { "key": "speed",             "label": "Speed",             "type": "number",   "section": "combat",         "min": 0, "default": 30 },
+      { "key": "proficiency_bonus", "label": "Proficiency Bonus", "type": "number",   "section": "combat",         "min": 0, "default": 2 },
+      { "key": "passive_perception","label": "Passive Perception","type": "number",   "section": "combat",         "default": 10 },
+      { "key": "inspiration",       "label": "Inspiration",       "type": "boolean",  "section": "combat",         "default": false },
+      { "key": "personality_traits","label": "Personality Traits","type": "textarea", "section": "personality" },
+      { "key": "ideals",            "label": "Ideals",            "type": "textarea", "section": "personality" },
+      { "key": "bonds",             "label": "Bonds",             "type": "textarea", "section": "personality" },
+      { "key": "flaws",             "label": "Flaws",             "type": "textarea", "section": "personality" }
+    ],
+    "characterSections": [
+      { "id": "identity",       "title": "Identity",       "layout": "grid", "fields": ["character_name", "character_class", "level", "background", "race", "alignment", "experience_points"] },
+      { "id": "ability_scores", "title": "Ability Scores", "layout": "grid", "fields": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"] },
+      { "id": "combat",         "title": "Combat",         "layout": "grid", "fields": ["hit_points", "armor_class", "initiative", "speed", "proficiency_bonus", "passive_perception", "inspiration"] },
+      { "id": "personality",    "title": "Personality",    "layout": "list", "fields": ["personality_traits", "ideals", "bonds", "flaws"] }
+    ],
+    "diceDefinitions": [
+      { "key": "d20_check",       "label": "Ability Check",          "notation": "1d20",  "description": "Standard ability check or saving throw" },
+      { "key": "d20_advantage",   "label": "Roll with Advantage",    "notation": "2d20",  "description": "Roll two d20s and keep the highest" },
+      { "key": "d20_disadvantage","label": "Roll with Disadvantage", "notation": "2d20",  "description": "Roll two d20s and keep the lowest" },
+      { "key": "hit_die_d6",      "label": "Hit Die d6",             "notation": "1d6",   "description": "Hit die for Sorcerers and Warlocks" },
+      { "key": "hit_die_d8",      "label": "Hit Die d8",             "notation": "1d8",   "description": "Hit die for Bards, Clerics, Druids, Monks, Rangers, and Rogues" },
+      { "key": "hit_die_d10",     "label": "Hit Die d10",            "notation": "1d10",  "description": "Hit die for Fighters and Paladins" },
+      { "key": "hit_die_d12",     "label": "Hit Die d12",            "notation": "1d12",  "description": "Hit die for Barbarians" }
+    ]
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "addon": {
+    "slug": "daggerheart-core",
+    "name": "Daggerheart Core",
+    "version": "1.0.0",
+    "description": "Core ruleset for Daggerheart. Defines the duality dice mechanic, character traits, hope and fear resources, damage thresholds, and class-based character schema.",
+    "repositoryUrl": "https://github.com/raabelo/st-addons",
+    "author": "saving-throw",
+    "license": "DPCCL",
+    "thumbnailUrl": "https://preview.redd.it/new-table-about-to-start-our-first-daggerheart-game-any-v0-6sb0z1s6gvif1.jpeg?width=1080&crop=smart&auto=webp&s=f43bd38427d10dc3dc4e0c52973bd7504d34d75c",
+    "types": ["CORE", "RULES"],
+    "tags": ["fantasy", "daggerheart", "critical-role", "duality-dice"],
+    "capabilities": ["character:read", "character:write", "dice:custom"],
+    "enableSkillUse": true,
+    "characterFields": [
+      { "key": "character_name",   "label": "Character Name", "type": "text",     "section": "identity",           "required": true },
+      { "key": "pronouns",         "label": "Pronouns",       "type": "text",     "section": "identity" },
+      { "key": "character_class",  "label": "Class",          "type": "select",   "section": "identity",           "required": true},
+      { "key": "subclass",         "label": "Subclass",       "type": "text",     "section": "identity" },
+      { "key": "ancestry",         "label": "Ancestry",       "type": "text",   "section": "identity"},
+      { "key": "community",        "label": "Community",      "type": "text",   "section": "identity"},
+      { "key": "level",            "label": "Level",          "type": "number",   "section": "identity",           "required": true, "min": 1, "max": 10, "default": 1 },
+      { "key": "tier",             "label": "Tier",           "type": "number",   "section": "identity",           "min": 1, "max": 4, "default": 1 },
+      { "key": "agility",          "label": "Agility",        "type": "number",   "section": "traits",             "min": -2, "max": 8, "default": 0, "flags": { "usableAsModifier": true } },
+      { "key": "strength",         "label": "Strength",       "type": "number",   "section": "traits",             "min": -2, "max": 8, "default": 0, "flags": { "usableAsModifier": true } },
+      { "key": "finesse",          "label": "Finesse",        "type": "number",   "section": "traits",             "min": -2, "max": 8, "default": 0, "flags": { "usableAsModifier": true } },
+      { "key": "instinct",         "label": "Instinct",       "type": "number",   "section": "traits",             "min": -2, "max": 8, "default": 0, "flags": { "usableAsModifier": true } },
+      { "key": "presence",         "label": "Presence",       "type": "number",   "section": "traits",             "min": -2, "max": 8, "default": 0, "flags": { "usableAsModifier": true } },
+      { "key": "knowledge",        "label": "Knowledge",      "type": "number",   "section": "traits",             "min": -2, "max": 8, "default": 0, "flags": { "usableAsModifier": true } },
+      { "key": "hit_points",        "label": "Hit Points",     "type": "resource",      "section": "combat" },
+      { "key": "stress",            "label": "Stress",         "type": "resource",      "section": "combat" },
+      { "key": "hope",              "label": "Hope",           "type": "number",        "section": "combat",        "min": 0, "max": 6, "default": 2 },
+      { "key": "evasion",           "label": "Evasion",        "type": "number",        "section": "combat",        "min": 0, "default": 8 },
+      { "key": "armor_slots",       "label": "Armor Slots",    "type": "number",        "section": "combat",        "min": 0, "max": 10, "default": 0 },
+      { "key": "armor_slots_spent", "label": "Armor",          "type": "shield_track",  "section": "combat",        "capacityFrom": "armor_slots", "iconType": "shield", "flags": { "realtimeDisplay": true } },
+      { "key": "proficiency_dice",  "label": "Proficiency Dice","type": "number",       "section": "combat",        "min": 0, "max": 4, "default": 1 },
+      { "key": "weapon_primary_name",        "label": "Primary Weapon Name",    "type": "text",   "hidden": true },
+      { "key": "weapon_primary_attribute",  "label": "Primary Attribute",       "type": "text",   "hidden": true },
+      { "key": "weapon_primary_range",      "label": "Primary Range",           "type": "text",   "hidden": true },
+      { "key": "weapon_primary_wield_type", "label": "Primary Wield Type",      "type": "select", "hidden": true, "options": ["oneHand", "twoHand"] },
+      { "key": "weapon_primary_damage_dice","label": "Primary Damage Dice",     "type": "dice",   "hidden": true, "flags": { "quickRollDice": true }, "labelFrom": "weapon_primary_name" },
+      { "key": "weapon_primary_damage_type","label": "Primary Damage Type",     "type": "text",   "hidden": true },
+      { "key": "weapon_primary_feature",   "label": "Primary Feature",          "type": "text",   "hidden": true },
+      { "key": "weapon_secondary_name",        "label": "Secondary Weapon Name", "type": "text",  "hidden": true },
+      { "key": "weapon_secondary_attribute",   "label": "Secondary Attribute",   "type": "text",  "hidden": true },
+      { "key": "weapon_secondary_range",       "label": "Secondary Range",        "type": "text",  "hidden": true },
+      { "key": "weapon_secondary_damage_dice", "label": "Secondary Damage Dice",  "type": "dice",  "hidden": true, "flags": { "quickRollDice": true }, "labelFrom": "weapon_secondary_name" },
+      { "key": "weapon_secondary_damage_type", "label": "Secondary Damage Type",  "type": "text",  "hidden": true },
+      { "key": "weapon_secondary_feature",     "label": "Secondary Feature",      "type": "text",  "hidden": true },
+      { "key": "weapons", "label": "Weapons", "type": "weapon_loadout", "section": "weapons", "linkedItemType": "weapon", "weaponSlots": {
+        "primary": {
+          "nameKey": "weapon_primary_name",
+          "attributeKey": "weapon_primary_attribute",
+          "rangeKey": "weapon_primary_range",
+          "wieldTypeKey": "weapon_primary_wield_type",
+          "damageDiceKey": "weapon_primary_damage_dice",
+          "damageTypeKey": "weapon_primary_damage_type",
+          "featureKey": "weapon_primary_feature"
+        },
+        "secondary": {
+          "nameKey": "weapon_secondary_name",
+          "attributeKey": "weapon_secondary_attribute",
+          "rangeKey": "weapon_secondary_range",
+          "damageDiceKey": "weapon_secondary_damage_dice",
+          "damageTypeKey": "weapon_secondary_damage_type",
+          "featureKey": "weapon_secondary_feature"
+        }
+        }},
+      { "key": "armor_name",              "label": "Armor Name",           "type": "text",    "hidden": true },
+      { "key": "armor_base",              "label": "Base Armor",            "type": "number",                 "min": 0, "default": 0 },
+      { "key": "armor_minor_threshold",   "label": "Armor Minor Threshold", "type": "number", "hidden": true, "min": 0 },
+      { "key": "armor_major_threshold",   "label": "Armor Major Threshold", "type": "number", "hidden": true, "min": 0 },
+      { "key": "armor_feature",           "label": "Armor Feature",         "type": "text",   "hidden": true },
+      { "key": "worn_armor", "label": "Worn Armor", "type": "armor_piece", "section": "worn_armor", "linkedItemType": "armor", "armorSlots": {
+        "nameKey": "armor_name",
+        "armorBase": "armor_base",
+        "minorThresholdKey": "armor_minor_threshold",
+        "majorThresholdKey": "armor_major_threshold",
+        "featureKey": "armor_feature"
+      }},
+      { "key": "minor_threshold",  "label": "Minor",          "type": "number",   "section": "damage_thresholds",  "min": 1, "default": 5 },
+      { "key": "major_threshold",  "label": "Major",          "type": "number",   "section": "damage_thresholds",  "min": 1, "default": 12 },
+      { "key": "backstory",         "label": "Backstory",      "type": "textarea",         "section": "background" },
+      { "key": "connections",      "label": "Connections",    "type": "dynamic_list",     "section": "background" },
+      { "key": "notes",            "label": "Notes",          "type": "textarea",         "section": "background" },
+      { "key": "experiences",      "label": "Experiences",    "type": "experience_list",  "section": "experiences", "max": 5, "flags": { "usableAsModifier": true, "allowSkillUse": true } },
+      { "key": "gold_handfuls",    "label": "Handfuls",       "type": "number",           "section": "inventory_gold", "min": 0, "default": 0 },
+      { "key": "gold_bags",        "label": "Bags",           "type": "number",           "section": "inventory_gold", "min": 0, "default": 0 },
+      { "key": "gold_chests",      "label": "Chests",         "type": "number",           "section": "inventory_gold", "min": 0, "default": 0 },
+      { "key": "inventory_items",  "label": "Items",          "type": "dynamic_list",     "section": "inventory" },
+      { "key": "hope_ability",     "label": "Hope Ability",   "type": "ability_card_list","section": "abilities",  "max": 1 },
+      { "key": "class_abilities",  "label": "Class Abilities","type": "ability_card_list","section": "abilities" },
+      { "key": "domain_abilities", "label": "Domain Abilities","type": "domain_card_list","section": "abilities" },
+      { "key": "abilities_notes",  "label": "Ability Notes",  "type": "dynamic_list",     "section": "abilities" },
+      { "key": "reference_images", "label": "Reference Images","type": "image_dossier",   "section": "dossier" }
+    ],
+    "characterSections": [
+      { "id": "identity",          "title": "Identity",          "layout": "grid", "fields": ["character_name", "pronouns", "character_class", "subclass", "ancestry", "community", "level", "tier"] },
+      { "id": "traits",            "title": "Traits",            "layout": "grid", "fields": ["agility", "strength", "finesse", "instinct", "presence", "knowledge"] },
+      { "id": "combat",            "title": "Combat",            "layout": "grid", "fields": ["hit_points", "stress", "hope", "evasion", "armor_slots", "armor_slots_spent", "proficiency_dice"] },
+      { "id": "damage_thresholds", "title": "Damage Thresholds", "layout": "grid", "fields": ["minor_threshold", "major_threshold"] },
+      { "id": "abilities",         "title": "Abilities",         "layout": "list", "fields": ["hope_ability", "class_abilities", "domain_abilities", "abilities_notes"] },
+      { "id": "experiences",       "title": "Experiences",       "layout": "list", "fields": ["experiences"] },
+      { "id": "weapons",           "title": "Weapons",           "layout": "list", "fields": ["weapons"] },
+      { "id": "worn_armor",        "title": "Worn Armor",        "layout": "list", "fields": ["worn_armor"] },
+      { "id": "inventory_gold",    "title": "Gold",              "layout": "grid", "fields": ["gold_handfuls", "gold_bags", "gold_chests"] },
+      { "id": "inventory",         "title": "Inventory",         "layout": "list", "fields": ["inventory_items"] },
+      { "id": "background",        "title": "Background",        "layout": "list", "fields": ["backstory", "connections", "notes"] },
+      { "id": "dossier",           "title": "Image Dossier",     "layout": "list", "fields": ["reference_images"] }
+    ],
+    "adversaryFields": [
+      { "key": "character_name",          "label": "Name",                 "type": "text",            "section": "identity", "required": true },
+      { "key": "tier",                    "label": "Tier",                 "type": "number",          "section": "identity", "min": 1, "max": 4, "default": 1 },
+      { "key": "type",                    "label": "Type",                 "type": "select",          "section": "identity", "required": true, "options": ["standard", "bruiser", "horde", "leader", "minion", "ranged", "skulk", "social", "solo", "support", "other"] },
+      { "key": "motivations_and_tactics", "label": "Motivations & Tactics","type": "dynamic_list",    "section": "motivations_and_tactics", "max": 10 },
+      { "key": "difficulty",              "label": "Difficulty",          "type": "number",          "section": "combat" },
+      { "key": "minor_threshold",         "label": "Minor",                "type": "number",          "section": "damage_thresholds", "min": 1 },
+      { "key": "major_threshold",         "label": "Major",                "type": "number",          "section": "damage_thresholds", "min": 1 },
+      { "key": "hit_points",              "label": "Hit Points",          "type": "number",          "section": "combat", "min": 0 },
+      { "key": "stress",                  "label": "Stress",               "type": "number",          "section": "combat", "min": 0 },
+      { "key": "attack_modifier",         "label": "Attack Modifier",     "type": "number",          "section": "combat" },
+      { "key": "standard_attack",         "label": "Standard Attack",     "type": "attack_profile",  "section": "combat" },
+      { "key": "experiences",             "label": "Experiences",          "type": "experience_list", "section": "experiences", "max": 5, "flags": { "usableAsModifier": true, "allowSkillUse": true } },
+      { "key": "features",                "label": "Features",            "type": "feature_list",    "section": "abilities" },
+      { "key": "reference_images",        "label": "Reference Images",     "type": "image_dossier",   "section": "dossier" }
+    ],
+    "adversarySections": [
+      { "id": "identity",                  "title": "Identity",             "layout": "grid", "fields": ["character_name", "tier", "type"] },
+      { "id": "motivations_and_tactics",    "title": "Motivations & Tactics","layout": "list", "fields": ["motivations_and_tactics"] },
+      { "id": "combat",                    "title": "Combat",               "layout": "grid", "fields": ["difficulty", "hit_points", "stress", "attack_modifier", "standard_attack"] },
+      { "id": "damage_thresholds",         "title": "Damage Thresholds",    "layout": "grid", "fields": ["minor_threshold", "major_threshold"] },
+      { "id": "experiences",               "title": "Experiences",          "layout": "list", "fields": ["experiences"] },
+      { "id": "abilities",                 "title": "Abilities",            "layout": "list", "fields": ["features"] },
+      { "id": "dossier",                   "title": "Image Dossier",        "layout": "list", "fields": ["reference_images"] }
+    ],
+    "diceDefinitions": [
+      { "key": "duality_roll",   "label": "Duality Roll",    "notation": "2d12", "description": "Core duality roll — one die is Hope, one is Fear. Sum + modifier = result. Higher die determines outcome direction.", "dice": [{ "label": "Hope", "color": "#FFD700" }, { "label": "Fear", "color": "#A855F7" }] },
+      { "key": "roll_d4",        "label": "d4",              "notation": "1d4",  "description": "Die roll with d4." },
+      { "key": "roll_d6",        "label": "d6",              "notation": "1d6",  "description": "Die roll with d6." },
+      { "key": "roll_d8",        "label": "d8",              "notation": "1d8",  "description": "Die roll with d8." },
+      { "key": "roll_d10",       "label": "d10",             "notation": "1d10", "description": "Die roll with d10." },
+      { "key": "roll_d12",       "label": "d12",             "notation": "1d12", "description": "Die roll with d12." },
+      { "key": "roll_d20",       "label": "d20",             "notation": "1d20", "description": "Die roll with d20." }
+    ],
+    "quickRolls": [
+      { "key": "duality_quickroll", "label": "Duality Roll", "notation": "2d12", "dice": [{ "label": "Hope", "color": "#FFD700" }, { "label": "Fear", "color": "#A855F7" }] }
+    ],
+    "itemTypes": [
+      {
+        "key": "weapon",
+        "label": "Weapon",
+        "fields": [
+          { "key": "name", "label": "Name", "type": "text", "required": true },
+          { "key": "attribute", "label": "Attribute", "type": "text" },
+          { "key": "range", "label": "Range", "type": "text" },
+          { "key": "wield_type", "label": "Wield Type", "type": "select", "options": ["oneHand", "twoHand"] },
+          { "key": "damage_dice", "label": "Damage Dice", "type": "dice" },
+          { "key": "damage_type", "label": "Damage Type", "type": "text" },
+          { "key": "feature", "label": "Feature", "type": "text" }
+        ],
+        "linkableFrom": ["weapon_loadout"]
+      },
+      {
+        "key": "armor",
+        "label": "Armor",
+        "fields": [
+          { "key": "name", "label": "Name", "type": "text", "required": true },
+          { "key": "minor_threshold", "label": "Minor Threshold", "type": "number", "min": 0 },
+          { "key": "major_threshold", "label": "Major Threshold", "type": "number", "min": 0 },
+          { "key": "feature", "label": "Feature", "type": "text" }
+        ],
+        "linkableFrom": ["armor_piece"]
+      }
+    ]
+  }
+}

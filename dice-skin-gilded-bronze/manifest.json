@@ -1,0 +1,24 @@
+{
+  "addon": {
+    "slug": "dice-skin-gilded-bronze",
+    "name": "Gilded Bronze Dice Skin",
+    "version": "1.0.0",
+    "description": "A standalone cosmetic dice skin addon — bronze-metal dice, unrelated to any RPG system. Texture and dicehit sound files live in this addon's own package folder (assets/textures, assets/sounds/dicehit) and are served via this repo's GitHub raw URL — resolves once committed and pushed.",
+    "repositoryUrl": "https://github.com/raabelo/st-addons",
+    "author": "saving-throw",
+    "license": "DPCCL",
+    "types": ["UTILITY"],
+    "tags": ["cosmetic", "dice-skin"],
+    "capabilities": ["dice:skin"],
+    "diceSkins": [
+      {
+        "key": "gilded_bronze",
+        "label": "Gilded Bronze",
+        "assetBaseUrl": "https://raw.githubusercontent.com/raabelo/st-addons/main/dice-skin-gilded-bronze/assets/",
+        "textureKey": "bronze01",
+        "material": "metal",
+        "background": "#C9A227"
+      }
+    ]
+  }
+}

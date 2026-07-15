@@ -1,0 +1,45 @@
+{
+  "name": "D&D 5e Básico",
+  "description": "Conjunto de regras básicas para Dungeons and Dragons 5ª Edição.",
+  "fields": {
+    "character_name": "Nome do Personagem",
+    "character_class": "Classe",
+    "level": "Nível",
+    "background": "Antecedente",
+    "race": "Raça",
+    "alignment": "Alinhamento",
+    "experience_points": "Pontos de Experiência",
+    "strength": "Força",
+    "dexterity": "Destreza",
+    "constitution": "Constituição",
+    "intelligence": "Inteligência",
+    "wisdom": "Sabedoria",
+    "charisma": "Carisma",
+    "hit_points": "Pontos de Vida",
+    "armor_class": "Classe de Armadura",
+    "initiative": "Iniciativa",
+    "speed": "Velocidade",
+    "proficiency_bonus": "Bônus de Proficiência",
+    "passive_perception": "Percepção Passiva",
+    "inspiration": "Inspiração",
+    "personality_traits": "Traços de Personalidade",
+    "ideals": "Ideais",
+    "bonds": "Vínculos",
+    "flaws": "Defeitos"
+  },
+  "sections": {
+    "identity": "Identidade",
+    "ability_scores": "Atributos",
+    "combat": "Combate",
+    "personality": "Personalidade"
+  },
+  "dice": {
+    "d20_check": "Teste de Atributo",
+    "d20_advantage": "Rolar com Vantagem",
+    "d20_disadvantage": "Rolar com Desvantagem",
+    "hit_die_d6": "Dado de Vida d6",
+    "hit_die_d8": "Dado de Vida d8",
+    "hit_die_d10": "Dado de Vida d10",
+    "hit_die_d12": "Dado de Vida d12"
+  }
+}

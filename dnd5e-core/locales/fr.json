@@ -1,0 +1,45 @@
+{
+  "name": "D&D 5e Essentiel",
+  "description": "Règles de base pour Donjons et Dragons 5ème Édition.",
+  "fields": {
+    "character_name": "Nom du Personnage",
+    "character_class": "Classe",
+    "level": "Niveau",
+    "background": "Historique",
+    "race": "Race",
+    "alignment": "Alignement",
+    "experience_points": "Points d'Expérience",
+    "strength": "Force",
+    "dexterity": "Dextérité",
+    "constitution": "Constitution",
+    "intelligence": "Intelligence",
+    "wisdom": "Sagesse",
+    "charisma": "Charisme",
+    "hit_points": "Points de Vie",
+    "armor_class": "Classe d'Armure",
+    "initiative": "Initiative",
+    "speed": "Vitesse",
+    "proficiency_bonus": "Bonus de Maîtrise",
+    "passive_perception": "Perception Passive",
+    "inspiration": "Inspiration",
+    "personality_traits": "Traits de Personnalité",
+    "ideals": "Idéaux",
+    "bonds": "Liens",
+    "flaws": "Défauts"
+  },
+  "sections": {
+    "identity": "Identité",
+    "ability_scores": "Caractéristiques",
+    "combat": "Combat",
+    "personality": "Personnalité"
+  },
+  "dice": {
+    "d20_check": "Test de Caractéristique",
+    "d20_advantage": "Jet avec Avantage",
+    "d20_disadvantage": "Jet avec Désavantage",
+    "hit_die_d6": "Dé de Vie d6",
+    "hit_die_d8": "Dé de Vie d8",
+    "hit_die_d10": "Dé de Vie d10",
+    "hit_die_d12": "Dé de Vie d12"
+  }
+}
