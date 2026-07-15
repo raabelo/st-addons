@@ -73,7 +73,7 @@
       { "key": "armor_feature",           "label": "Armor Feature",         "type": "text",   "hidden": true },
       { "key": "worn_armor", "label": "Worn Armor", "type": "armor_piece", "section": "worn_armor", "linkedItemType": "armor", "armorSlots": {
         "nameKey": "armor_name",
-        "armorBase": "armor_base",
+        "baseKey": "armor_base",
         "minorThresholdKey": "armor_minor_threshold",
         "majorThresholdKey": "armor_major_threshold",
         "featureKey": "armor_feature"
