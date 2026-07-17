@@ -68,7 +68,7 @@
         }
         }},
       { "key": "armor_name",              "label": "Armor Name",           "type": "text",    "hidden": true },
-      { "key": "armor_base",              "label": "Base Armor",            "type": "number",                 "min": 0, "default": 0 },
+      { "key": "armor_base",              "label": "Base Armor",            "type": "number",   "hidden": true, "min": 0, "default": 0 },
       { "key": "armor_minor_threshold",   "label": "Armor Minor Threshold", "type": "number", "hidden": true, "min": 0 },
       { "key": "armor_major_threshold",   "label": "Armor Major Threshold", "type": "number", "hidden": true, "min": 0 },
       { "key": "armor_feature",           "label": "Armor Feature",         "type": "text",   "hidden": true },
