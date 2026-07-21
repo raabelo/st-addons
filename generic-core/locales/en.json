@@ -1,0 +1,27 @@
+{
+  "name": "Generic Core",
+  "description": "A system-agnostic starter ruleset. Original, unrestricted content meant as the platform's default character sheet and a starting template for building your own addon.",
+  "fields": {
+    "character_name": "Character Name",
+    "character_class": "Class or Role",
+    "level": "Level",
+    "origin": "Origin",
+    "power": "Power",
+    "quickness": "Quickness",
+    "intellect": "Intellect",
+    "resolve": "Resolve",
+    "hit_points": "Hit Points",
+    "defense": "Defense",
+    "initiative": "Initiative",
+    "notes": "Notes"
+  },
+  "sections": {
+    "identity": "Identity",
+    "attributes": "Attributes",
+    "combat": "Combat",
+    "background": "Background"
+  },
+  "dice": {
+    "basic_check": "Basic Check"
+  }
+}

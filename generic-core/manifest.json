@@ -1,0 +1,37 @@
+{
+  "addon": {
+    "slug": "generic-core",
+    "name": "Generic Core",
+    "version": "1.0.0",
+    "description": "A system-agnostic starter ruleset. Original, unrestricted content meant as the platform's default character sheet and a starting template for building your own addon.",
+    "repositoryUrl": "https://github.com/raabelo/st-addons",
+    "author": "atelier.dev",
+    "license": { "type": "original" },
+    "types": ["CORE", "RULES"],
+    "tags": ["generic", "template", "original"],
+    "capabilities": ["character:read", "character:write", "dice:custom"],
+    "characterFields": [
+      { "key": "character_name", "label": "Character Name", "type": "text",     "section": "identity", "required": true },
+      { "key": "character_class","label": "Class or Role",  "type": "text",     "section": "identity", "required": true },
+      { "key": "level",          "label": "Level",          "type": "number",   "section": "identity", "min": 1, "max": 20, "default": 1 },
+      { "key": "origin",         "label": "Origin",         "type": "text",     "section": "identity" },
+      { "key": "power",          "label": "Power",          "type": "number",   "section": "attributes", "min": 1, "max": 20, "default": 10 },
+      { "key": "quickness",      "label": "Quickness",      "type": "number",   "section": "attributes", "min": 1, "max": 20, "default": 10 },
+      { "key": "intellect",      "label": "Intellect",      "type": "number",   "section": "attributes", "min": 1, "max": 20, "default": 10 },
+      { "key": "resolve",        "label": "Resolve",        "type": "number",   "section": "attributes", "min": 1, "max": 20, "default": 10 },
+      { "key": "hit_points",     "label": "Hit Points",     "type": "resource", "section": "combat" },
+      { "key": "defense",        "label": "Defense",        "type": "number",   "section": "combat", "min": 0, "default": 10 },
+      { "key": "initiative",     "label": "Initiative",     "type": "number",   "section": "combat", "default": 0 },
+      { "key": "notes",          "label": "Notes",          "type": "textarea", "section": "background" }
+    ],
+    "characterSections": [
+      { "id": "identity",   "title": "Identity",   "layout": "grid", "fields": ["character_name", "character_class", "level", "origin"] },
+      { "id": "attributes", "title": "Attributes", "layout": "grid", "fields": ["power", "quickness", "intellect", "resolve"] },
+      { "id": "combat",     "title": "Combat",     "layout": "grid", "fields": ["hit_points", "defense", "initiative"] },
+      { "id": "background", "title": "Background", "layout": "list", "fields": ["notes"] }
+    ],
+    "diceDefinitions": [
+      { "key": "basic_check", "label": "Basic Check", "notation": "1d20", "description": "Standard check against a difficulty" }
+    ]
+  }
+}

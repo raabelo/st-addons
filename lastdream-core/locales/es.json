@@ -1,6 +1,6 @@
 {
-  "name": "Daggerheart Básico",
-  "description": "Reglas básicas para Daggerheart. Define el mecanismo de dados de dualidad, rasgos del personaje, recursos de esperanza y miedo, umbrales de daño y esquema de personaje basado en clase.",
+  "name": "Lastdream Core",
+  "description": "Reglas compatibles con Daggerheart. Define el mecanismo de dados de dualidad, rasgos del personaje, recursos de esperanza y miedo, umbrales de daño y esquema de personaje basado en clase.",
   "fields": {
     "character_name": "Nombre del Personaje",
     "pronouns": "Pronombres",

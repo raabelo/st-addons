@@ -1,6 +1,6 @@
 {
-  "name": "Daggerheart Básico",
-  "description": "Conjunto de regras básicas para Daggerheart. Define o mecanismo de dados de dualidade, atributos do personagem, recursos de esperança e medo, limiares de dano e esquema de personagem baseado em classe.",
+  "name": "Lastdream Core",
+  "description": "Conjunto de regras compatível com Daggerheart. Define o mecanismo de dados de dualidade, atributos do personagem, recursos de esperança e medo, limiares de dano e esquema de personagem baseado em classe.",
   "fields": {
     "character_name": "Nome do Personagem",
     "pronouns": "Pronomes",

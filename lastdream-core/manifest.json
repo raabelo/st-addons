@@ -1,16 +1,22 @@
 {
   "addon": {
-    "slug": "daggerheart-core",
-    "name": "Daggerheart Core",
+    "slug": "lastdream-core",
+    "name": "Lastdream Core",
     "version": "1.1.0",
-    "description": "Core ruleset for Daggerheart. Defines the duality dice mechanic, character traits, hope and fear resources, damage thresholds, and class-based character schema.",
+    "description": "Daggerheart Compatible ruleset. Defines the duality dice mechanic, character traits, hope and fear resources, damage thresholds, and class-based character schema.",
     "repositoryUrl": "https://github.com/raabelo/st-addons",
-    "author": "saving-throw",
-    "license": "DPCCL",
-    "thumbnailUrl": "https://preview.redd.it/new-table-about-to-start-our-first-daggerheart-game-any-v0-6sb0z1s6gvif1.jpeg?width=1080&crop=smart&auto=webp&s=f43bd38427d10dc3dc4e0c52973bd7504d34d75c",
-    "thumbnailWideUrl": "https://www.daggerheart.com/wp-content/uploads/2024/12/HEADER-DH-Limited-Cover-Art-1024x504.png",
+    "author": "atelier.dev",
+    "license": {
+      "type": "dpcgl",
+      "attributionText": "This product includes materials from the Daggerheart System Reference Document 1.0, © Critical Role, LLC. under the terms of the Darrington Press Community Gaming (DPCGL) License. More information can be found at https://www.daggerheart.com. There are no previous modifications by others.",
+      "sourceUrl": "https://www.daggerheart.com",
+      "compatibilityStatement": "Daggerheart Compatible. Terms at Daggerheart.com",
+      "monetized": false
+    },
+    "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/lastdream/thumb-portrait.webp",
+    "thumbnailWideUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/lastdream/thumb-video.webp",
     "types": ["CORE", "RULES"],
-    "tags": ["fantasy", "daggerheart", "critical-role", "duality-dice"],
+    "tags": ["fantasy", "Daggerheart Compatible"],
     "capabilities": ["character:read", "character:write", "dice:custom"],
     "enableSkillUse": true,
     "characterFields": [

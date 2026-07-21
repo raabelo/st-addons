@@ -1,0 +1,27 @@
+{
+  "name": "Genérico Core",
+  "description": "Um conjunto de regras neutro, sem vínculo a nenhum sistema específico. Conteúdo original e sem restrições, usado como ficha padrão da plataforma e modelo de partida para criar seu próprio addon.",
+  "fields": {
+    "character_name": "Nome do Personagem",
+    "character_class": "Classe ou Papel",
+    "level": "Nível",
+    "origin": "Origem",
+    "power": "Poder",
+    "quickness": "Agilidade",
+    "intellect": "Intelecto",
+    "resolve": "Determinação",
+    "hit_points": "Pontos de Vida",
+    "defense": "Defesa",
+    "initiative": "Iniciativa",
+    "notes": "Anotações"
+  },
+  "sections": {
+    "identity": "Identidade",
+    "attributes": "Atributos",
+    "combat": "Combate",
+    "background": "Antecedentes"
+  },
+  "dice": {
+    "basic_check": "Teste Básico"
+  }
+}

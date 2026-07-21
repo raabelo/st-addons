@@ -6,7 +6,7 @@
     "description": "A standalone cosmetic dice skin addon — forest-green wood dice, unrelated to any RPG system. Texture and dicehit sound files live in this addon's own package folder (assets/textures, assets/sounds/dicehit) and are served via this repo's GitHub raw URL — resolves once committed and pushed.",
     "repositoryUrl": "https://github.com/raabelo/st-addons",
     "author": "saving-throw",
-    "license": "DPCCL",
+    "license": { "type": "original" },
     "types": ["UTILITY"],
     "tags": ["cosmetic", "dice-skin"],
     "capabilities": ["dice:skin"],

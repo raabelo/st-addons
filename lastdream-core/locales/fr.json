@@ -1,6 +1,6 @@
 {
-  "name": "Daggerheart Essentiel",
-  "description": "Règles de base pour Daggerheart. Définit le mécanisme des dés de dualité, les traits du personnage, les ressources d'espoir et de peur, les seuils de dégâts et le schéma de personnage basé sur la classe.",
+  "name": "Lastdream Core",
+  "description": "Règles compatibles avec Daggerheart. Définit le mécanisme des dés de dualité, les traits du personnage, les ressources d'espoir et de peur, les seuils de dégâts et le schéma de personnage basé sur la classe.",
   "fields": {
     "character_name": "Nom du Personnage",
     "pronouns": "Pronoms",

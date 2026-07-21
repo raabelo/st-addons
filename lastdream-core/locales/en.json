@@ -1,6 +1,6 @@
 {
-  "name": "Daggerheart Core",
-  "description": "Core ruleset for Daggerheart. Defines the duality dice mechanic, character traits, hope and fear resources, damage thresholds, and class-based character schema.",
+  "name": "Lastdream Core",
+  "description": "Daggerheart Compatible ruleset. Defines the duality dice mechanic, character traits, hope and fear resources, damage thresholds, and class-based character schema.",
   "fields": {
     "character_name": "Character Name",
     "pronouns": "Pronouns",
