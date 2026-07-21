@@ -2,7 +2,7 @@
   "addon": {
     "slug": "daggerheart-core",
     "name": "Daggerheart Core",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Core ruleset for Daggerheart. Defines the duality dice mechanic, character traits, hope and fear resources, damage thresholds, and class-based character schema.",
     "repositoryUrl": "https://github.com/raabelo/st-addons",
     "author": "saving-throw",
@@ -16,12 +16,13 @@
     "characterFields": [
       { "key": "character_name",   "label": "Character Name", "type": "text",     "section": "identity",           "required": true },
       { "key": "pronouns",         "label": "Pronouns",       "type": "text",     "section": "identity" },
-      { "key": "character_class",  "label": "Class",          "type": "select",   "section": "identity",           "required": true},
-      { "key": "subclass",         "label": "Subclass",       "type": "text",     "section": "identity" },
-      { "key": "ancestry",         "label": "Ancestry",       "type": "text",   "section": "identity"},
-      { "key": "community",        "label": "Community",      "type": "text",   "section": "identity"},
+      { "key": "character_class",  "label": "Class",          "type": "select",   "section": "identity",           "required": true, "flags": { "allowCustom": true } },
+      { "key": "subclass",         "label": "Subclass",       "type": "select",   "section": "identity",           "flags": { "allowCustom": true } },
+      { "key": "ancestry",         "label": "Ancestry",       "type": "select",   "section": "identity",           "flags": { "allowCustom": true } },
+      { "key": "community",        "label": "Community",      "type": "select",   "section": "identity",           "flags": { "allowCustom": true } },
       { "key": "level",            "label": "Level",          "type": "number",   "section": "identity",           "required": true, "min": 1, "max": 10, "default": 1 },
       { "key": "tier",             "label": "Tier",           "type": "number",   "section": "identity",           "min": 1, "max": 4, "default": 1 },
+      { "key": "domains",          "label": "Domains",        "type": "multiselect", "hidden": true },
       { "key": "agility",          "label": "Agility",        "type": "number",   "section": "traits",             "min": -2, "max": 8, "default": 0, "flags": { "usableAsModifier": true } },
       { "key": "strength",         "label": "Strength",       "type": "number",   "section": "traits",             "min": -2, "max": 8, "default": 0, "flags": { "usableAsModifier": true } },
       { "key": "finesse",          "label": "Finesse",        "type": "number",   "section": "traits",             "min": -2, "max": 8, "default": 0, "flags": { "usableAsModifier": true } },
@@ -32,8 +33,8 @@
       { "key": "stress",            "label": "Stress",         "type": "resource",      "section": "combat" },
       { "key": "hope",              "label": "Hope",           "type": "number",        "section": "combat",        "min": 0, "max": 6, "default": 2 },
       { "key": "evasion",           "label": "Evasion",        "type": "number",        "section": "combat",        "min": 0, "default": 8 },
-      { "key": "armor_slots",       "label": "Armor Slots",    "type": "number",        "section": "combat",        "min": 0, "max": 10, "default": 0 },
-      { "key": "armor_slots_spent", "label": "Armor",          "type": "shield_track",  "section": "combat",        "capacityFrom": "armor_slots", "iconType": "shield", "flags": { "realtimeDisplay": true } },
+      { "key": "armor_slots",       "label": "Armor Score",    "type": "number",        "section": "combat",        "min": 0, "max": 10, "default": 0 },
+      { "key": "armor_slots_spent", "label": "Armor Slots",    "type": "shield_track",  "section": "combat",        "capacityFrom": "armor_slots", "iconType": "shield", "flags": { "realtimeDisplay": true } },
       { "key": "proficiency_dice",  "label": "Proficiency Dice","type": "number",       "section": "combat",        "min": 0, "max": 4, "default": 1 },
       { "key": "weapon_primary_name",        "label": "Primary Weapon Name",    "type": "text",   "hidden": true },
       { "key": "weapon_primary_attribute",  "label": "Primary Attribute",       "type": "text",   "hidden": true },
@@ -109,6 +110,432 @@
       { "id": "background",        "title": "Background",        "layout": "list", "fields": ["backstory", "connections", "notes"] },
       { "id": "dossier",           "title": "Image Dossier",     "layout": "list", "fields": ["reference_images"] }
     ],
+    "presets": {
+      "class": [
+        {
+          "key": "bard",
+          "aliases": { "en": "Bard", "pt": "Bardo", "es": "Bardo", "fr": "Barde" },
+          "fieldValues": {
+            "evasion": 10,
+            "hit_points": { "max": 5 },
+            "domains": ["codex", "grace"],
+            "hope_ability": [
+              { "title": "Make a Scene", "description": "Spend 3 Hope to temporarily Distract a target within Close range, giving them a -2 penalty to their Difficulty." }
+            ],
+            "class_abilities": [
+              { "title": "Rally", "description": "Once per session, describe how you rally the party and give yourself and each of your allies a Rally Die. At level 1, your Rally Die is a d6. A PC can spend their Rally Die to roll it, adding the result to their action roll, reaction roll, damage roll, or to clear a number of Stress equal to the result. At the end of each session, clear all unspent Rally Dice. At level 5, your Rally Die increases to a d8." }
+            ]
+          }
+        },
+        {
+          "key": "druid",
+          "aliases": { "en": "Druid", "pt": "Druida", "es": "Druida", "fr": "Druide" },
+          "fieldValues": {
+            "evasion": 10,
+            "hit_points": { "max": 6 },
+            "domains": ["arcana", "sage"],
+            "hope_ability": [
+              { "title": "Evolution", "description": "Spend 3 Hope to transform into a Beastform without marking a Stress. When you do, choose one trait to raise by +1 until you drop out of that Beastform." }
+            ],
+            "class_abilities": [
+              { "title": "Beastform", "description": "Mark a Stress to magically transform into a creature of your tier or lower from the Beastform list. You can drop out of this form at any time. While transformed, you can't use weapons or cast spells from domain cards, but you can still use other features or abilities you have access to. Spells you cast before you transform stay active and last for their normal duration, and you can talk and communicate as normal. Additionally, you gain the Beastform's features, add their Evasion bonus to your Evasion, and use the trait specified in their statistics for your attack. While you're in a Beastform, your armor becomes part of your body and you mark Armor Slots as usual; when you drop out of a Beastform, those marked Armor Slots remain marked. If you mark your last Hit Point, you automatically drop out of this form." },
+              { "title": "Wildtouch", "description": "You can perform harmless, subtle effects that involve nature—such as causing a flower to rapidly grow, summoning a slight gust of wind, or starting a campfire—at will." }
+            ]
+          }
+        },
+        {
+          "key": "guardian",
+          "aliases": { "en": "Guardian", "pt": "Guardião", "es": "Guardián", "fr": "Gardien" },
+          "fieldValues": {
+            "evasion": 9,
+            "hit_points": { "max": 7 },
+            "domains": ["blade", "valor"],
+            "hope_ability": [
+              { "title": "Frontline Tank", "description": "Spend 3 Hope to clear 2 Armor Slots." }
+            ],
+            "class_abilities": [
+              { "title": "Unstoppable", "description": "Once per long rest, you can become Unstoppable. You gain an Unstoppable Die. At level 1, your Unstoppable Die is a d4. Place it on your character sheet in the space provided, starting with the 1 value facing up. After you make a damage roll that deals 1 or more Hit Points to a target, increase the Unstoppable Die value by one. When the die's value would exceed its maximum value or when the scene ends, remove the die and drop out of Unstoppable. At level 5, your Unstoppable Die increases to a d6. While Unstoppable, you gain the following benefits: you reduce the severity of physical damage by one threshold (Severe to Major, Major to Minor, Minor to None); you add the current value of the Unstoppable Die to your damage roll; you can't be Restrained or Vulnerable." }
+            ]
+          }
+        },
+        {
+          "key": "ranger",
+          "aliases": { "en": "Ranger", "pt": "Patrulheiro", "es": "Explorador", "fr": "Rôdeur" },
+          "fieldValues": {
+            "evasion": 12,
+            "hit_points": { "max": 6 },
+            "domains": ["bone", "sage"],
+            "hope_ability": [
+              { "title": "Hold Them Off", "description": "Spend 3 Hope when you succeed on an attack with a weapon to use that same roll against two additional adversaries within range of the attack." }
+            ],
+            "class_abilities": [
+              { "title": "Ranger's Focus", "description": "Spend a Hope and make an attack against a target. On a success, deal your attack's normal damage and temporarily make the attack's target your Focus. Until this feature ends or you make a different creature your Focus, you gain the following benefits against your Focus: you know precisely what direction they are in; when you deal damage to them, they must mark a Stress; when you fail an attack against them, you can end your Ranger's Focus feature to reroll your Duality Dice." }
+            ]
+          }
+        },
+        {
+          "key": "rogue",
+          "aliases": { "en": "Rogue", "pt": "Ladino", "es": "Pícaro", "fr": "Roublard" },
+          "fieldValues": {
+            "evasion": 12,
+            "hit_points": { "max": 6 },
+            "domains": ["midnight", "grace"],
+            "hope_ability": [
+              { "title": "Rogue's Dodge", "description": "Spend 3 Hope to gain a +2 bonus to your Evasion until the next time an attack succeeds against you. Otherwise, this bonus lasts until your next rest." }
+            ],
+            "class_abilities": [
+              { "title": "Cloaked", "description": "Any time you would be Hidden, you are instead Cloaked. In addition to the benefits of the Hidden condition, while Cloaked you remain unseen if you are stationary when an adversary moves to where they would normally see you. After you make an attack or end a move within line of sight of an adversary, you are no longer Cloaked." },
+              { "title": "Sneak Attack", "description": "When you succeed on an attack while Cloaked or while an ally is within Melee range of your target, add a number of d6s equal to your tier to your damage roll. Level 1: Tier 1. Levels 2-4: Tier 2. Levels 5-7: Tier 3. Levels 8-10: Tier 4." }
+            ]
+          }
+        },
+        {
+          "key": "seraph",
+          "aliases": { "en": "Seraph", "pt": "Serafim", "es": "Serafín", "fr": "Séraphin" },
+          "fieldValues": {
+            "evasion": 9,
+            "hit_points": { "max": 7 },
+            "domains": ["splendor", "valor"],
+            "hope_ability": [
+              { "title": "Life Support", "description": "Spend 3 Hope to clear a Hit Point on an ally within Close range." }
+            ],
+            "class_abilities": [
+              { "title": "Prayer Dice", "description": "At the beginning of each session, roll a number of d4s equal to your subclass's Spellcast trait and place them on your character sheet in the space provided. These are your Prayer Dice. You can spend any number of Prayer Dice to aid yourself or an ally within Far range. You can use a spent die's value to reduce incoming damage, add to a roll's result after the roll is made, or gain Hope equal to the result. At the end of each session, clear all unspent Prayer Dice." }
+            ]
+          }
+        },
+        {
+          "key": "sorcerer",
+          "aliases": { "en": "Sorcerer", "pt": "Feiticeiro", "es": "Hechicero", "fr": "Sorcier" },
+          "fieldValues": {
+            "evasion": 10,
+            "hit_points": { "max": 6 },
+            "domains": ["arcana", "midnight"],
+            "hope_ability": [
+              { "title": "Volatile Magic", "description": "Spend 3 Hope to reroll any number of your damage dice on an attack that deals magic damage." }
+            ],
+            "class_abilities": [
+              { "title": "Arcane Sense", "description": "You can sense the presence of magical people and objects within Close range." },
+              { "title": "Minor Illusion", "description": "Make a Spellcast Roll (10). On a success, you create a minor visual illusion no larger than yourself within Close range. This illusion is convincing to anyone at Close range or farther." },
+              { "title": "Channel Raw Power", "description": "Once per long rest, you can place a domain card from your loadout into your vault and choose to either: gain Hope equal to the level of the card, or enhance a spell that deals damage, gaining a bonus to your damage roll equal to twice the level of the card." }
+            ]
+          }
+        },
+        {
+          "key": "warrior",
+          "aliases": { "en": "Warrior", "pt": "Guerreiro", "es": "Guerrero", "fr": "Guerrier" },
+          "fieldValues": {
+            "evasion": 11,
+            "hit_points": { "max": 6 },
+            "domains": ["blade", "bone"],
+            "hope_ability": [
+              { "title": "No Mercy", "description": "Spend 3 Hope to gain a +1 bonus to your attack rolls until your next rest." }
+            ],
+            "class_abilities": [
+              { "title": "Attack of Opportunity", "description": "If an adversary within Melee range attempts to leave that range, make a reaction roll using a trait of your choice against their Difficulty. Choose one effect on a success, or two if you critically succeed: they can't move from where they are; you deal damage to them equal to your primary weapon's damage; you move with them." },
+              { "title": "Combat Training", "description": "You ignore burden when equipping weapons. When you deal physical damage, you gain a bonus to your damage roll equal to your level." }
+            ]
+          }
+        },
+        {
+          "key": "wizard",
+          "aliases": { "en": "Wizard", "pt": "Mago", "es": "Mago", "fr": "Magicien" },
+          "fieldValues": {
+            "evasion": 11,
+            "hit_points": { "max": 5 },
+            "domains": ["codex", "splendor"],
+            "hope_ability": [
+              { "title": "Not This Time", "description": "Spend 3 Hope to force an adversary within Far range to reroll an attack or damage roll." }
+            ],
+            "class_abilities": [
+              { "title": "Prestidigitation", "description": "You can perform harmless, subtle magical effects at will. For example, you can change an object's color, create a smell, light a candle, cause a tiny object to float, illuminate a room, or repair a small object." },
+              { "title": "Strange Patterns", "description": "Choose a number between 1 and 12. When you roll that number on a Duality Die, gain a Hope or clear a Stress. You can change this number when you take a long rest." }
+            ]
+          }
+        }
+      ],
+      "subclass": [
+        {
+          "key": "troubadour",
+          "requiresClass": "bard",
+          "aliases": { "en": "Troubadour", "pt": "Trovador", "es": "Trovador", "fr": "Troubadour" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Gifted Performer", "description": "You can play three different types of songs, once each per long rest; describe how you perform for others to gain the listed benefit: Relaxing Song — you and all allies within Close range clear a Hit Point; Epic Song — make a target within Close range temporarily Vulnerable; Heartbreaking Song — you and all allies within Close range gain a Hope." },
+              { "title": "Maestro", "description": "Your rallying songs steel the courage of those who listen. When you give a Rally Die to an ally, they can gain a Hope or clear a Stress." },
+              { "title": "Virtuoso", "description": "You are among the greatest of your craft and your skill is boundless. You can perform each of your \"Gifted Performer\" feature's songs twice per long rest." }
+            ]
+          }
+        },
+        {
+          "key": "wordsmith",
+          "requiresClass": "bard",
+          "aliases": { "en": "Wordsmith", "pt": "Mestre das Palavras", "es": "Maestro de las Palabras", "fr": "Maître des Mots" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Rousing Speech", "description": "Once per long rest, you can give a heartfelt, inspiring speech. All allies within Far range clear 2 Stress." },
+              { "title": "Heart of a Poet", "description": "After you make an action roll to impress, persuade, or offend someone, you can spend a Hope to add a d4 to the roll." },
+              { "title": "Eloquent", "description": "Your moving words boost morale. Once per session, when you encourage an ally, you can do one of the following: allow them to find a mundane object or tool they need; help an Ally without spending Hope; give them an additional downtime move during their next rest." },
+              { "title": "Epic Poetry", "description": "Your Rally Die increases to a d10. Additionally, when you Help an Ally, you can narrate the moment as if you were writing the tale of their heroism in a memoir. When you do, roll a d10 as your advantage die." }
+            ]
+          }
+        },
+        {
+          "key": "warden_of_the_elements",
+          "requiresClass": "druid",
+          "aliases": { "en": "Warden of the Elements", "pt": "Guardião dos Elementos", "es": "Guardián de los Elementos", "fr": "Gardien des Éléments" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Elemental Incarnation", "description": "Mark a Stress to Channel one of the following elements until you take Severe damage or until your next rest: Fire — when an adversary within Melee range deals damage to you, they take 1d10 magic damage; Earth — gain a bonus to your damage thresholds equal to your Proficiency; Water — when you deal damage to an adversary within Melee range, all other adversaries within Very Close range must mark a Stress; Air — you can hover, gaining advantage on Agility Rolls." },
+              { "title": "Elemental Aura", "description": "Once per rest while Channeling, you can assume an aura matching your element. The aura affects targets within Close range until your Channeling ends. Fire — when an adversary marks 1 or more Hit Points, they must also mark a Stress; Earth — your allies gain a +1 bonus to Strength; Water — when an adversary deals damage to you, you can mark a Stress to move them anywhere within Very Close range of where they are; Air — when you or an ally takes damage from an attack beyond Melee range, reduce the damage by 1d8." },
+              { "title": "Elemental Dominion", "description": "You further embody your element. While Channeling, you gain the following benefit: Fire — you gain a +1 bonus to your Proficiency for attacks and spells that deal damage; Earth — when you would mark Hit Points, roll a d6 per Hit Point marked, and for each result of 6, reduce the number of Hit Points you mark by 1; Water — when an attack against you succeeds, you can mark a Stress to make the attacker temporarily Vulnerable; Air — you gain a +1 bonus to your Evasion and can fly." }
+            ]
+          }
+        },
+        {
+          "key": "warden_of_renewal",
+          "requiresClass": "druid",
+          "aliases": { "en": "Warden of Renewal", "pt": "Guardião da Renovação", "es": "Guardián de la Renovación", "fr": "Gardien du Renouveau" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Clarity of Nature", "description": "Once per long rest, you can create a space of natural serenity within Close range. When you spend a few minutes resting within the space, clear Stress equal to your Instinct, distributed as you choose between you and your allies." },
+              { "title": "Regeneration", "description": "Touch a creature and spend 3 Hope. That creature clears 1d4 Hit Points." },
+              { "title": "Regenerative Reach", "description": "You can target creatures within Very Close range with your \"Regeneration\" feature." },
+              { "title": "Warden's Protection", "description": "Once per long rest, spend 2 Hope to clear 2 Hit Points on 1d4 allies within Close range." },
+              { "title": "Defender", "description": "Your animal transformation embodies a healing guardian spirit. When you're in Beastform and an ally within Close range marks 2 or more Hit Points, you can mark a Stress to reduce the number of Hit Points they mark by 1." }
+            ]
+          }
+        },
+        {
+          "key": "stalwart",
+          "requiresClass": "guardian",
+          "aliases": { "en": "Stalwart", "pt": "Inabalável", "es": "Inquebrantable", "fr": "Inébranlable" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Unwavering", "description": "Gain a permanent +1 bonus to your damage thresholds." },
+              { "title": "Iron Will", "description": "When you take physical damage, you can mark an additional Armor Slot to reduce the severity." },
+              { "title": "Unrelenting", "description": "Gain a permanent +2 bonus to your damage thresholds." },
+              { "title": "Partners-in-Arms", "description": "When an ally within Very Close range takes damage, you can mark an Armor Slot to reduce the severity by one threshold." },
+              { "title": "Undaunted", "description": "Gain a permanent +3 bonus to your damage thresholds." },
+              { "title": "Loyal Protector", "description": "When an ally within Close range has 2 or fewer Hit Points and would take damage, you can mark a Stress to sprint to their side and take the damage instead." }
+            ]
+          }
+        },
+        {
+          "key": "vengeance",
+          "requiresClass": "guardian",
+          "aliases": { "en": "Vengeance", "pt": "Vingança", "es": "Venganza", "fr": "Vengeance" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "At Ease", "description": "Gain an additional Stress slot." },
+              { "title": "Revenge", "description": "When an adversary within Melee range succeeds on an attack against you, you can mark 2 Stress to force the attacker to mark a Hit Point." },
+              { "title": "Act of Reprisal", "description": "When an adversary damages an ally within Melee range, you gain a +1 bonus to your Proficiency for the next successful attack you make against that adversary." },
+              { "title": "Nemesis", "description": "Spend 2 Hope to Prioritize an adversary until your next rest. When you make an attack against your Prioritized adversary, you can swap the results of your Hope and Fear Dice. You can only Prioritize one adversary at a time." }
+            ]
+          }
+        },
+        {
+          "key": "beastbound",
+          "requiresClass": "ranger",
+          "aliases": { "en": "Beastbound", "pt": "Vínculo Bestial", "es": "Vínculo Bestial", "fr": "Lié aux Bêtes" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Companion", "description": "You have an animal companion of your choice (at the GM's discretion). They stay by your side unless you tell them otherwise. Take the Ranger Companion sheet. When you level up your character, choose a level-up option for your companion from this sheet as well." },
+              { "title": "Expert Training", "description": "Choose an additional level-up option for your companion." },
+              { "title": "Battle-Bonded", "description": "When an adversary attacks you while they're within your companion's Melee range, you gain a +2 bonus to your Evasion against the attack." },
+              { "title": "Advanced Training", "description": "Choose two additional level-up options for your companion." },
+              { "title": "Loyal Friend", "description": "Once per long rest, when the damage from an attack would mark your companion's last Stress or your last Hit Point and you're within Close range of each other, you or your companion can rush to the other's side and take that damage instead." }
+            ]
+          }
+        },
+        {
+          "key": "wayfinder",
+          "requiresClass": "ranger",
+          "aliases": { "en": "Wayfinder", "pt": "Desbravador", "es": "Rastreador", "fr": "Éclaireur" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Ruthless Predator", "description": "When you make a damage roll, you can mark a Stress to gain a +1 bonus to your Proficiency. Additionally, when you deal Severe damage to an adversary, they must mark a Stress." },
+              { "title": "Path Forward", "description": "When you're traveling to a place you've previously visited or you carry an object that has been at the location before, you can identify the shortest, most direct path to your destination." },
+              { "title": "Elusive Predator", "description": "When your Focus makes an attack against you, you gain a +2 bonus to your Evasion against the attack." },
+              { "title": "Apex Predator", "description": "Before you make an attack roll against your Focus, you can spend a Hope. On a successful attack, you remove a Fear from the GM's Fear pool." }
+            ]
+          }
+        },
+        {
+          "key": "nightwalker",
+          "requiresClass": "rogue",
+          "aliases": { "en": "Nightwalker", "pt": "Caminhante da Noite", "es": "Caminante Nocturno", "fr": "Marcheur de Nuit" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Shadow Stepper", "description": "You can move from shadow to shadow. When you move into an area of darkness or a shadow cast by another creature or object, you can mark a Stress to disappear from where you are and reappear inside another shadow within Far range. When you reappear, you are Cloaked." },
+              { "title": "Dark Cloud", "description": "Make a Spellcast Roll (15). On a success, create a temporary dark cloud that covers any area within Close range. Anyone in this cloud can't see outside of it, and anyone outside of it can't see in. You're considered Cloaked from any adversary for whom the cloud blocks line of sight." },
+              { "title": "Adrenaline", "description": "While you're Vulnerable, add your level to your damage rolls." },
+              { "title": "Fleeting Shadow", "description": "Gain a permanent +1 bonus to your Evasion. You can use your \"Shadow Stepper\" feature to move within Very Far range." },
+              { "title": "Vanishing Act", "description": "Mark a Stress to become Cloaked at any time. When Cloaked from this feature, you automatically clear the Restrained condition if you have it. You remain Cloaked in this way until you roll with Fear or until your next rest." }
+            ]
+          }
+        },
+        {
+          "key": "syndicate",
+          "requiresClass": "rogue",
+          "aliases": { "en": "Syndicate", "pt": "Sindicato", "es": "Sindicato", "fr": "Syndicat" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Well-Connected", "description": "When you arrive in a prominent town or environment, you know somebody who calls this place home. Give them a name, note how you think they could be useful, and choose one fact from the following list: they owe me a favor, but they'll be hard to find; they're going to ask for something in exchange; they're always in a great deal of trouble; we used to be together, it's a long story; we didn't part on great terms." },
+              { "title": "Contacts Everywhere", "description": "Once per session, you can briefly call on a shady contact. Choose one of the following benefits and describe what brought them here to help you in this moment: they provide 1 handful of gold, a unique tool, or a mundane object that the situation requires; on your next action roll, their help provides a +3 bonus to the result of your Hope or Fear Die; the next time you deal damage, they snipe from the shadows, adding 2d8 to your damage roll." },
+              { "title": "Reliable Backup", "description": "You can use your \"Contacts Everywhere\" feature three times per session. The following options are added to the list of benefits you can choose from when you use that feature: when you mark 1 or more Hit Points, they can rush out to shield you, reducing the Hit Points marked by 1; when you make a Presence Roll in conversation, they back you up and you can roll a d20 as your Hope Die." }
+            ]
+          }
+        },
+        {
+          "key": "divine_wielder",
+          "requiresClass": "seraph",
+          "aliases": { "en": "Divine Wielder", "pt": "Portador Divino", "es": "Portador Divino", "fr": "Porteur Divin" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Spirit Weapon", "description": "When you have an equipped weapon with a range of Melee or Very Close, it can fly from your hand to attack an adversary within Close range and then return to you. You can mark a Stress to target an additional adversary within range with the same attack roll." },
+              { "title": "Sparing Touch", "description": "Once per long rest, touch a creature and clear 2 Hit Points or 2 Stress from them." },
+              { "title": "Devout", "description": "When you roll your Prayer Dice, you can roll an additional die and discard the lowest result. Additionally, you can use your \"Sparing Touch\" feature twice instead of once per long rest." },
+              { "title": "Sacred Resonance", "description": "When you roll damage for your \"Spirit Weapon\" feature, if any of the die results match, double the value of each matching die. For example, if you roll two 5s, they count as two 10s." }
+            ]
+          }
+        },
+        {
+          "key": "winged_sentinel",
+          "requiresClass": "seraph",
+          "aliases": { "en": "Winged Sentinel", "pt": "Sentinela Alada", "es": "Centinela Alado", "fr": "Sentinelle Ailée" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Wings of Light", "description": "You can fly. While flying, you can do the following: mark a Stress to pick up and carry another willing creature approximately your size or smaller; spend a Hope to deal an extra 1d8 damage on a successful attack." },
+              { "title": "Ethereal Visage", "description": "Your supernatural visage strikes awe and fear. While flying, you have advantage on Presence Rolls. When you succeed with Hope on a Presence Roll, you can remove a Fear from the GM's Fear pool instead of gaining Hope." },
+              { "title": "Ascendant", "description": "Gain a permanent +4 bonus to your Severe damage threshold." },
+              { "title": "Power of the Gods", "description": "While flying, you deal an extra 1d12 damage instead of 1d8 from your \"Wings of Light\" feature." }
+            ]
+          }
+        },
+        {
+          "key": "elemental_origin",
+          "requiresClass": "sorcerer",
+          "aliases": { "en": "Elemental Origin", "pt": "Origem Elemental", "es": "Origen Elemental", "fr": "Origine Élémentaire" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Elementalist", "description": "Choose one of the following elements at character creation: air, earth, fire, lightning, water. You can shape this element into harmless effects. Additionally, spend a Hope and describe how your control over this element helps an action roll you're about to make, then either gain a +2 bonus to the roll or a +3 bonus to the roll's damage." },
+              { "title": "Natural Evasion", "description": "You can call forth your element to protect you from harm. When an attack roll against you succeeds, you can mark a Stress and describe how you use your element to defend you. When you do, roll a d6 and add its result to your Evasion against the attack." },
+              { "title": "Transcendence", "description": "Once per long rest, you can transform into a physical manifestation of your element. When you do, describe your transformation and choose two of the following benefits to gain until your next rest: +4 bonus to your Severe threshold; +1 bonus to a character trait of your choice; +1 bonus to your Proficiency; +2 bonus to your Evasion." }
+            ]
+          }
+        },
+        {
+          "key": "primal_origin",
+          "requiresClass": "sorcerer",
+          "aliases": { "en": "Primal Origin", "pt": "Origem Primordial", "es": "Origen Primordial", "fr": "Origine Primordiale" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Manipulate Magic", "description": "Your primal origin allows you to modify the essence of magic itself. After you cast a spell or make an attack using a weapon that deals magic damage, you can mark a Stress to do one of the following: extend the spell or attack's reach by one range; gain a +2 bonus to the action roll's result; double a damage die of your choice; hit an additional target within range." },
+              { "title": "Enchanted Aid", "description": "You can enhance the magic of others with your essence. When you Help an Ally with a Spellcast Roll, you can roll a d8 as your advantage die. Once per long rest, after an ally has made a Spellcast Roll with your help, you can swap the results of their Duality Dice." },
+              { "title": "Arcane Charge", "description": "You can gather magical energy to enhance your capabilities. When you take magic damage, you become Charged. Alternatively, you can spend 2 Hope to become Charged. When you successfully make an attack that deals magic damage while Charged, you can clear your Charge to either gain a +10 bonus to the damage roll or gain a +3 bonus to the Difficulty of a reaction roll the spell causes the target to make. You stop being Charged at your next long rest." }
+            ]
+          }
+        },
+        {
+          "key": "call_of_the_brave",
+          "requiresClass": "warrior",
+          "aliases": { "en": "Call of the Brave", "pt": "Chamado do Bravo", "es": "Llamado del Valiente", "fr": "Appel du Brave" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Courage", "description": "When you fail a roll with Fear, you gain a Hope." },
+              { "title": "Battle Ritual", "description": "Once per long rest, before you attempt something incredibly dangerous or face off against a foe who clearly outmatches you, describe what ritual you perform or preparations you make. When you do, clear 2 Stress and gain 2 Hope." },
+              { "title": "Rise to the Challenge", "description": "You are vigilant in the face of mounting danger. While you have 2 or fewer Hit Points unmarked, you can roll a d20 as your Hope Die." },
+              { "title": "Camaraderie", "description": "Your unwavering bravery is a rallying point for your allies. You can initiate a Tag Team Roll one additional time per session. Additionally, when an ally initiates a Tag Team Roll with you, they only need to spend 2 Hope to do so." }
+            ]
+          }
+        },
+        {
+          "key": "call_of_the_slayer",
+          "requiresClass": "warrior",
+          "aliases": { "en": "Call of the Slayer", "pt": "Chamado do Matador", "es": "Llamado del Cazador", "fr": "Appel du Tueur" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Slayer", "description": "You gain a pool of dice called Slayer Dice. On a roll with Hope, you can place a d6 on this card instead of gaining a Hope, adding the die to the pool. You can store a number of Slayer Dice equal to your Proficiency. When you make an attack roll or damage roll, you can spend any number of these Slayer Dice, rolling them and adding their result to the roll. At the end of each session, clear any unspent Slayer Dice on this card and gain a Hope per die cleared." },
+              { "title": "Weapon Specialist", "description": "You can wield multiple weapons with dangerous ease. When you succeed on an attack, you can spend a Hope to add one of the damage dice from your secondary weapon to the damage roll. Additionally, once per long rest when you roll your Slayer Dice, reroll any 1s." },
+              { "title": "Martial Preparation", "description": "You're an inspirational warrior to all who travel with you. Your party gains access to the Martial Preparation downtime move. To use this move during a rest, describe how you instruct and train with your party. You and each ally who chooses this downtime move gain a d6 Slayer Die. A PC with a Slayer Die can spend it to roll the die and add the result to an attack or damage roll of their choice." }
+            ]
+          }
+        },
+        {
+          "key": "school_of_knowledge",
+          "requiresClass": "wizard",
+          "aliases": { "en": "School of Knowledge", "pt": "Escola do Conhecimento", "es": "Escuela del Conocimiento", "fr": "École de la Connaissance" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Prepared", "description": "Take an additional domain card of your level or lower from a domain you have access to." },
+              { "title": "Adept", "description": "When you Utilize an Experience, you can mark a Stress instead of spending a Hope. If you do, double your Experience modifier for that roll." },
+              { "title": "Accomplished", "description": "Take an additional domain card of your level or lower from a domain you have access to." },
+              { "title": "Perfect Recall", "description": "Once per rest, when you recall a domain card in your vault, you can reduce its Recall Cost by 1." },
+              { "title": "Brilliant", "description": "Take an additional domain card of your level or lower from a domain you have access to." },
+              { "title": "Honed Expertise", "description": "When you use an Experience, roll a d6. On a result of 5 or higher, you can use it without spending Hope." }
+            ]
+          }
+        },
+        {
+          "key": "school_of_war",
+          "requiresClass": "wizard",
+          "aliases": { "en": "School of War", "pt": "Escola da Guerra", "es": "Escuela de la Guerra", "fr": "École de la Guerre" },
+          "fieldValues": {
+            "class_abilities": [
+              { "title": "Battlemage", "description": "You've focused your studies on becoming an unconquerable force on the battlefield. Gain an additional Hit Point slot." },
+              { "title": "Face Your Fear", "description": "When you succeed with Fear on an attack roll, you deal an extra 1d10 magic damage." },
+              { "title": "Conjure Shield", "description": "You can maintain a protective barrier of magic. While you have at least 2 Hope, you add your Proficiency to your Evasion." },
+              { "title": "Fueled by Fear", "description": "The extra magic damage from your \"Face Your Fear\" feature increases to 2d10." },
+              { "title": "Thrive in Chaos", "description": "When you succeed on an attack, you can mark a Stress after rolling damage to force the target to mark an additional Hit Point." },
+              { "title": "Have No Fear", "description": "The extra magic damage from your \"Face Your Fear\" feature increases to 3d10." }
+            ]
+          }
+        }
+      ],
+      "ancestry": [
+        { "key": "clank",    "aliases": { "en": "Clank",    "pt": "Clank",   "es": "Clank",   "fr": "Clank" } },
+        { "key": "drakona",  "aliases": { "en": "Drakona",  "pt": "Drakona", "es": "Drakona", "fr": "Drakona" } },
+        { "key": "dwarf",    "aliases": { "en": "Dwarf",    "pt": "Anão",    "es": "Enano",   "fr": "Nain" } },
+        { "key": "elf",      "aliases": { "en": "Elf",      "pt": "Elfo",    "es": "Elfo",    "fr": "Elfe" } },
+        { "key": "faerie",   "aliases": { "en": "Faerie",   "pt": "Fada",    "es": "Hada",    "fr": "Fée" } },
+        { "key": "faun",     "aliases": { "en": "Faun",     "pt": "Fauno",   "es": "Fauno",   "fr": "Faune" } },
+        { "key": "firbolg",  "aliases": { "en": "Firbolg",  "pt": "Firbolg", "es": "Firbolg", "fr": "Firbolg" } },
+        { "key": "fungril",  "aliases": { "en": "Fungril",  "pt": "Fungril", "es": "Fungril", "fr": "Fungril" } },
+        { "key": "galapa",   "aliases": { "en": "Galapa",   "pt": "Galapa",  "es": "Galapa",  "fr": "Galapa" } },
+        { "key": "giant",    "aliases": { "en": "Giant",    "pt": "Gigante", "es": "Gigante", "fr": "Géant" } },
+        { "key": "goblin",   "aliases": { "en": "Goblin",   "pt": "Goblin",  "es": "Goblin",  "fr": "Gobelin" } },
+        { "key": "halfling", "aliases": { "en": "Halfling", "pt": "Halfling","es": "Mediano", "fr": "Halfelin" } },
+        { "key": "human",    "aliases": { "en": "Human",    "pt": "Humano",  "es": "Humano",  "fr": "Humain" } },
+        { "key": "infernis", "aliases": { "en": "Infernis", "pt": "Infernis","es": "Infernis","fr": "Infernis" } },
+        { "key": "katari",   "aliases": { "en": "Katari",   "pt": "Katari",  "es": "Katari",  "fr": "Katari" } },
+        { "key": "orc",      "aliases": { "en": "Orc",      "pt": "Orc",     "es": "Orco",    "fr": "Orc" } },
+        { "key": "ribbet",   "aliases": { "en": "Ribbet",   "pt": "Ribbet",  "es": "Ribbet",  "fr": "Ribbet" } },
+        { "key": "simiah",   "aliases": { "en": "Simiah",   "pt": "Simiah",  "es": "Simiah",  "fr": "Simiah" } }
+      ],
+      "community": [
+        { "key": "highborne",   "aliases": { "en": "Highborne",   "pt": "Altonato",       "es": "Altonato",       "fr": "Hautné" } },
+        { "key": "loreborne",   "aliases": { "en": "Loreborne",   "pt": "Sabionato",      "es": "Sabionato",      "fr": "Savoirné" } },
+        { "key": "orderborne",  "aliases": { "en": "Orderborne",  "pt": "Ordemnato",      "es": "Ordennato",      "fr": "Ordrené" } },
+        { "key": "ridgeborne",  "aliases": { "en": "Ridgeborne",  "pt": "Cristanato",     "es": "Crestanato",     "fr": "Crêtené" } },
+        { "key": "seaborne",    "aliases": { "en": "Seaborne",    "pt": "Marinato",       "es": "Marinato",       "fr": "Merné" } },
+        { "key": "slyborne",    "aliases": { "en": "Slyborne",    "pt": "Astutonato",     "es": "Astutonato",     "fr": "Rusené" } },
+        { "key": "underborne",  "aliases": { "en": "Underborne",  "pt": "Subnato",        "es": "Subnato",        "fr": "Sousné" } },
+        { "key": "wanderborne", "aliases": { "en": "Wanderborne", "pt": "Andarilhonato",  "es": "Andarinato",     "fr": "Errantné" } },
+        { "key": "wildborne",   "aliases": { "en": "Wildborne",   "pt": "Selvanato",      "es": "Silvanato",      "fr": "Sauvagené" } }
+      ],
+      "domain": [
+        { "key": "arcana",   "aliases": { "en": "Arcana",   "pt": "Arcano",     "es": "Arcano",     "fr": "Arcane" } },
+        { "key": "blade",    "aliases": { "en": "Blade",    "pt": "Lâmina",     "es": "Hoja",       "fr": "Lame" } },
+        { "key": "bone",     "aliases": { "en": "Bone",     "pt": "Osso",       "es": "Hueso",      "fr": "Os" } },
+        { "key": "codex",    "aliases": { "en": "Codex",    "pt": "Codex",      "es": "Códice",     "fr": "Codex" } },
+        { "key": "grace",    "aliases": { "en": "Grace",    "pt": "Graça",      "es": "Gracia",     "fr": "Grâce" } },
+        { "key": "midnight", "aliases": { "en": "Midnight", "pt": "Meia-Noite", "es": "Medianoche", "fr": "Minuit" } },
+        { "key": "sage",     "aliases": { "en": "Sage",     "pt": "Sábio",      "es": "Sabio",      "fr": "Sage" } },
+        { "key": "splendor", "aliases": { "en": "Splendor", "pt": "Esplendor",  "es": "Esplendor",  "fr": "Splendeur" } },
+        { "key": "valor",    "aliases": { "en": "Valor",    "pt": "Valor",      "es": "Valor",      "fr": "Valeur" } }
+      ]
+    },
     "adversaryFields": [
       { "key": "character_name",          "label": "Name",                 "type": "text",            "section": "identity", "required": true },
       { "key": "tier",                    "label": "Tier",                 "type": "number",          "section": "identity", "min": 1, "max": 4, "default": 1 },
