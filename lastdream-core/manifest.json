@@ -2,21 +2,17 @@
   "addon": {
     "slug": "lastdream-core",
     "name": "Lastdream Core",
-    "version": "1.1.0",
-    "description": "Daggerheart Compatible ruleset. Defines the duality dice mechanic, character traits, hope and fear resources, damage thresholds, and class-based character schema.",
-    "repositoryUrl": "https://github.com/raabelo/st-addons",
+    "version": "1.0.0",
+    "description": "Core ruleset for the Lastdream setting. Defines character schema, ability scores, combat stats, and standard dice mechanics.",
+    "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/lastdream-core",
     "author": "atelier.dev",
     "license": {
-      "type": "dpcgl",
-      "attributionText": "This product includes materials from the Daggerheart System Reference Document 1.0, © Critical Role, LLC. under the terms of the Darrington Press Community Gaming (DPCGL) License. More information can be found at https://www.daggerheart.com. There are no previous modifications by others.",
-      "sourceUrl": "https://www.daggerheart.com",
-      "compatibilityStatement": "Daggerheart Compatible. Terms at Daggerheart.com",
-      "monetized": false
+      "type": "original"
     },
     "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/lastdream/thumb-portrait.webp",
     "thumbnailWideUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/lastdream/thumb-video.webp",
     "types": ["CORE", "RULES"],
-    "tags": ["fantasy", "Daggerheart Compatible"],
+    "tags": ["fantasy"],
     "capabilities": ["character:read", "character:write", "dice:custom"],
     "enableSkillUse": true,
     "characterFields": [

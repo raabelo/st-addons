@@ -1,0 +1,58 @@
+{
+  "addon": {
+    "name": "Dreams & Nightmares Core",
+    "slug": "dreams-and-nightmares-core",
+    "tags": ["fantasy", "lastdream"],
+    "types": ["CORE", "RULES"],
+    "author": "atelier.dev",
+    "license": { "type": "original" },
+    "version": "1.0.0",
+    "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/dreams-and-nightmares/dreams-and-nightmares.webp",
+    "thumbnailWideUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/dreams-and-nightmares/dreams-and-nightmares-landscape.webp",
+    "description": "Core ruleset for the Dreams & Nightmares setting. Defines character schema, ability scores, combat stats, and standard dice mechanics.",
+    "capabilities": ["character:read", "character:write", "dice:custom"],
+    "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/dreams-and-nightmares-core",
+    "characterFields": [
+      { "key": "character_name", "type": "text", "label": "Character Name", "section": "identity", "required": true },
+      { "key": "character_class", "type": "text", "label": "Class", "section": "identity", "required": true },
+      { "key": "level", "max": 20, "min": 1, "type": "number", "label": "Level", "default": 1, "section": "identity" },
+      { "key": "background", "type": "text", "label": "Background", "section": "identity" },
+      { "key": "race", "type": "text", "label": "Race", "section": "identity", "required": true },
+      { "key": "alignment", "type": "select", "label": "Alignment", "options": ["Lawful Good", "Neutral Good", "Chaotic Good", "Lawful Neutral", "True Neutral", "Chaotic Neutral", "Lawful Evil", "Neutral Evil", "Chaotic Evil"], "section": "identity" },
+      { "key": "experience_points", "min": 0, "type": "number", "label": "Experience Points", "default": 0, "section": "identity" },
+      { "key": "strength", "max": 30, "min": 1, "type": "number", "label": "Strength", "default": 10, "section": "ability_scores" },
+      { "key": "dexterity", "max": 30, "min": 1, "type": "number", "label": "Dexterity", "default": 10, "section": "ability_scores" },
+      { "key": "constitution", "max": 30, "min": 1, "type": "number", "label": "Constitution", "default": 10, "section": "ability_scores" },
+      { "key": "intelligence", "max": 30, "min": 1, "type": "number", "label": "Intelligence", "default": 10, "section": "ability_scores" },
+      { "key": "wisdom", "max": 30, "min": 1, "type": "number", "label": "Wisdom", "default": 10, "section": "ability_scores" },
+      { "key": "charisma", "max": 30, "min": 1, "type": "number", "label": "Charisma", "default": 10, "section": "ability_scores" },
+      { "key": "hit_points", "type": "resource", "label": "Hit Points", "section": "combat" },
+      { "key": "armor_class", "min": 0, "type": "number", "label": "Armor Class", "default": 10, "section": "combat" },
+      { "key": "initiative", "type": "number", "label": "Initiative", "default": 0, "section": "combat" },
+      { "key": "speed", "min": 0, "type": "number", "label": "Speed", "default": 30, "section": "combat" },
+      { "key": "proficiency_bonus", "min": 0, "type": "number", "label": "Proficiency Bonus", "default": 2, "section": "combat" },
+      { "key": "passive_perception", "type": "number", "label": "Passive Perception", "default": 10, "section": "combat" },
+      { "key": "inspiration", "type": "boolean", "label": "Inspiration", "default": false, "section": "combat" },
+      { "key": "personality_traits", "type": "textarea", "label": "Personality Traits", "section": "personality" },
+      { "key": "ideals", "type": "textarea", "label": "Ideals", "section": "personality" },
+      { "key": "bonds", "type": "textarea", "label": "Bonds", "section": "personality" },
+      { "key": "flaws", "type": "textarea", "label": "Flaws", "section": "personality" }
+    ],
+    "diceDefinitions": [
+      { "key": "d20_check", "label": "Ability Check", "notation": "1d20", "description": "Standard ability check or saving throw" },
+      { "key": "d20_dis_adv", "label": "Roll with Advantage/Disadvantage", "notation": "2d20", "description": "Roll two d20s and keep the highest/lowest" },
+      { "key": "roll_d4",        "label": "d4",              "notation": "1d4",  "description": "Die roll with d4." },
+      { "key": "roll_d6",        "label": "d6",              "notation": "1d6",  "description": "Die roll with d6." },
+      { "key": "roll_d8",        "label": "d8",              "notation": "1d8",  "description": "Die roll with d8." },
+      { "key": "roll_d10",       "label": "d10",             "notation": "1d10", "description": "Die roll with d10." },
+      { "key": "roll_d12",       "label": "d12",             "notation": "1d12", "description": "Die roll with d12." },
+      { "key": "roll_d20",       "label": "d20",             "notation": "1d20", "description": "Die roll with d20." }
+    ],
+    "characterSections": [
+      { "id": "identity", "title": "Identity", "fields": ["character_name", "character_class", "level", "background", "race", "alignment", "experience_points"], "layout": "grid" },
+      { "id": "ability_scores", "title": "Ability Scores", "fields": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"], "layout": "grid" },
+      { "id": "combat", "title": "Combat", "fields": ["hit_points", "armor_class", "initiative", "speed", "proficiency_bonus", "passive_perception", "inspiration"], "layout": "grid" },
+      { "id": "personality", "title": "Personality", "fields": ["personality_traits", "ideals", "bonds", "flaws"], "layout": "list" }
+    ]
+  }
+}
