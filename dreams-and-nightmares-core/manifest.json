@@ -39,8 +39,8 @@
       { "key": "flaws", "type": "textarea", "label": "Flaws", "section": "personality" }
     ],
     "diceDefinitions": [
-      { "key": "d20_check", "label": "Ability Check", "notation": "1d20", "description": "Standard ability check or saving throw" },
-      { "key": "d20_dis_adv", "label": "Roll with Advantage/Disadvantage", "notation": "2d20", "description": "Roll two d20s and keep the highest/lowest" },
+      { "key": "d20_check", "label": "Ability Check (d20)", "notation": "1d20", "description": "Standard ability check or saving throw" },
+      { "key": "d20_dis_adv", "label": "(Dis)advantage (2d20)", "notation": "2d20", "description": "Roll two d20s and keep the highest/lowest" },
       { "key": "roll_d4",        "label": "d4",              "notation": "1d4",  "description": "Die roll with d4." },
       { "key": "roll_d6",        "label": "d6",              "notation": "1d6",  "description": "Die roll with d6." },
       { "key": "roll_d8",        "label": "d8",              "notation": "1d8",  "description": "Die roll with d8." },
