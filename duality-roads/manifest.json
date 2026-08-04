@@ -2,7 +2,7 @@
   "addon": {
     "slug": "duality-roads",
     "name": "Duality Roads",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Extension for Lastdream Core adding optional dual-class and dual-ancestry character creation, inspired by the Daggerheart SRD's multiclass and mixed-ancestry guidance. Adds a second Class, second Subclass, and second Ancestry slot, plus a single-domain access restriction on the second class to mirror the SRD's tradeoff that multiclassing grants narrower domain access than a primary class.",
     "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/duality-roads",
     "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/duality-roads/book.webp",
