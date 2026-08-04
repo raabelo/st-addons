@@ -1,0 +1,30 @@
+{
+  "addon": {
+    "slug": "duality-roads",
+    "name": "Duality Roads",
+    "version": "1.0.0",
+    "description": "Extension for Lastdream Core adding optional dual-class and dual-ancestry character creation, inspired by the Daggerheart SRD's multiclass and mixed-ancestry guidance. Adds a second Class, second Subclass, and second Ancestry slot, plus a single-domain access restriction on the second class to mirror the SRD's tradeoff that multiclassing grants narrower domain access than a primary class.",
+    "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/duality-roads",
+    "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/duality-roads/book.webp",
+    "thumbnailWideUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/duality-roads/video.webp",
+    "author": "atelier.dev",
+    "license": { "type": "original" },
+    "types": ["RULES"],
+    "tags": ["fantasy", "lastdream", "multiclass", "expansion"],
+    "capabilities": ["character:read", "character:write"],
+    "dependencies": [
+      { "slug": "lastdream-core", "version": "^1.0.0" }
+    ],
+    "characterFields": [
+      { "key": "character_class_2", "label": "Second Class", "type": "select", "section": "multiclass_selections", "flags": { "allowCustom": true }, "presetCategory": "class" },
+      { "key": "subclass_2", "label": "Second Subclass", "type": "select", "section": "multiclass_selections", "flags": { "allowCustom": true }, "presetCategory": "subclass", "requiresClassField": "character_class_2" },
+      { "key": "ancestry_2", "label": "Second Ancestry (Mixed Heritage)", "type": "select", "section": "multiclass_selections", "flags": { "allowCustom": true }, "presetCategory": "ancestry" },
+      { "key": "second_class_domain", "label": "Second Class Domain Access", "type": "select", "section": "multiclass_selections", "flags": { "allowCustom": true }, "options": ["Arcana", "Blade", "Bone", "Codex", "Grace", "Midnight", "Sage", "Splendor", "Valor"] },
+      { "key": "multiclass_notes", "label": "Multiclass & Mixed Heritage Notes", "type": "textarea", "section": "multiclass_notes" }
+    ],
+    "characterSections": [
+      { "id": "multiclass_selections", "title": "Multiclass & Mixed Heritage", "layout": "grid", "fields": ["character_class_2", "subclass_2", "ancestry_2", "second_class_domain"] },
+      { "id": "multiclass_notes", "title": "Multiclass & Mixed Heritage Notes", "layout": "list", "fields": ["multiclass_notes"] }
+    ]
+  }
+}

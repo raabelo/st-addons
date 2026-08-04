@@ -1,0 +1,15 @@
+{
+  "name": "Duality Roads",
+  "description": "Extension for Lastdream Core adding optional dual-class and dual-ancestry character creation, inspired by the Daggerheart SRD's multiclass and mixed-ancestry guidance.",
+  "fields": {
+    "character_class_2": "Second Class",
+    "subclass_2": "Second Subclass",
+    "ancestry_2": "Second Ancestry (Mixed Heritage)",
+    "second_class_domain": "Second Class Domain Access",
+    "multiclass_notes": "Multiclass & Mixed Heritage Notes"
+  },
+  "sections": {
+    "multiclass_selections": "Multiclass & Mixed Heritage",
+    "multiclass_notes": "Multiclass & Mixed Heritage Notes"
+  }
+}

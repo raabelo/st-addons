@@ -1,0 +1,15 @@
+{
+  "name": "Chemins de la Dualité",
+  "description": "Extension pour Lastdream Core ajoutant la création optionnelle de personnages à double classe et double ascendance, inspirée des règles de multiclassage et d'ascendance mixte du SRD de Daggerheart.",
+  "fields": {
+    "character_class_2": "Deuxième Classe",
+    "subclass_2": "Deuxième Sous-classe",
+    "ancestry_2": "Deuxième Ascendance (Héritage Mixte)",
+    "second_class_domain": "Accès au Domaine de la Deuxième Classe",
+    "multiclass_notes": "Notes de Multiclassage & Héritage Mixte"
+  },
+  "sections": {
+    "multiclass_selections": "Multiclassage & Héritage Mixte",
+    "multiclass_notes": "Notes de Multiclassage & Héritage Mixte"
+  }
+}

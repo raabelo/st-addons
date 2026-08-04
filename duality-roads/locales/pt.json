@@ -1,0 +1,15 @@
+{
+  "name": "Estradas da Dualidade",
+  "description": "Extensão para o Lastdream Core que adiciona a criação opcional de personagens com dupla classe e dupla ancestralidade, inspirada nas diretrizes de multiclasse e ancestralidade mista do SRD de Daggerheart.",
+  "fields": {
+    "character_class_2": "Segunda Classe",
+    "subclass_2": "Segunda Subclasse",
+    "ancestry_2": "Segunda Ancestralidade (Herança Mista)",
+    "second_class_domain": "Acesso a Domínio da Segunda Classe",
+    "multiclass_notes": "Notas de Multiclasse & Herança Mista"
+  },
+  "sections": {
+    "multiclass_selections": "Multiclasse & Herança Mista",
+    "multiclass_notes": "Notas de Multiclasse & Herança Mista"
+  }
+}
