@@ -299,6 +299,12 @@ to diverge over time — thresholds, tiers, action economy).
   armorSlots?: ArmorSlotConfig;  // only for type: "armor_piece"
   linkedItemType?: string;    // itemTypes[].key this field's "@" autocomplete searches, or "default"
   visibleWhen?: { field: string; presetKey: string };  // only render once `field` resolves to `presetKey`
+  presetCategory?: string;    // explicit override — which `presets` category backs this field, instead of
+                                // inferring it from the field's own key (see §7) — lets a second field bind
+                                // to a category another field already uses, e.g. a second class selector
+  requiresClassField?: string; // for subclass-like fields backed by `presetCategory`: which class field's
+                                 // resolved preset key narrows `requiresClass` entries; defaults to the
+                                 // sheet's first "class"-category field when omitted
 }
 ```
 
@@ -448,6 +454,43 @@ active in the same campaign — see [§17](#17-addon-composition-multiple-active
 Preset keys must be unique per category within your own addon; a
 cross-addon key collision in the same category is rejected at composition
 time.
+
+### 7.1 Multiple fields sharing one presets category
+
+By default, a `characterFields[]` entry is matched to a `presets` category
+by its own `key` (e.g. a field named `character_class` or `subclass`
+resolves against `presets.class`/`presets.subclass` by naming convention).
+That convention only ever resolves **one** field per category. If your
+addon needs a *second* field backed by the same growable preset pool — for
+example a multiclass extension adding a second class selector that should
+offer every class any active addon has contributed to `presets.class`,
+without re-declaring its own hardcoded copy of the option list — set
+`presetCategory` explicitly on that field (see [§5.1](#51-characterfield-shape)):
+
+```json
+{ "key": "character_class_2", "label": "Second Class", "type": "select", "flags": { "allowCustom": true }, "presetCategory": "class" }
+```
+
+For a subclass-like field bound this way, also set `requiresClassField` to
+the key of the specific class field whose resolved preset key should
+narrow that subclass field's `requiresClass` entries — otherwise, with two
+class fields on the same sheet, resolution would always narrow against the
+sheet's first "class"-category field instead of the one your extra field
+actually pairs with:
+
+```json
+{ "key": "subclass_2", "label": "Second Subclass", "type": "select", "flags": { "allowCustom": true }, "presetCategory": "subclass", "requiresClassField": "character_class_2" }
+```
+
+Both props are optional — omit them and existing single-field-per-category
+addons behave exactly as before. Your extension addon doesn't need to
+declare any `presets` entries of its own to make use of this: eligibility
+to compose is decided by the dependency graph (§13/§17), not by whether an
+addon owns preset content, so `character_class_2` picks up every class
+option contributed by `lastdream-core` *and* any other installed addon
+that also extends it. See
+[`lastdream-multiclass/manifest.json`](./lastdream-multiclass/manifest.json)
+in this repo for a complete worked example (extends `lastdream-core`).
 
 ---
 
