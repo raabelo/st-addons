@@ -346,6 +346,8 @@ to diverge over time — thresholds, tiers, action economy).
   title: string;                                // 1-64 chars, no HTML
   layout: "grid" | "list" | "cards" | "table";
   fields: string[];                              // up to 50 CharacterField keys, in display order
+  insertAfter?: string;                          // extension-addon only — see §7.2
+  insertBefore?: string;                         // extension-addon only — see §7.2, mutually exclusive with insertAfter
 }
 ```
 
@@ -489,8 +491,40 @@ to compose is decided by the dependency graph (§13/§17), not by whether an
 addon owns preset content, so `character_class_2` picks up every class
 option contributed by `lastdream-core` *and* any other installed addon
 that also extends it. See
-[`lastdream-multiclass/manifest.json`](./lastdream-multiclass/manifest.json)
+[`duality-roads/manifest.json`](./duality-roads/manifest.json)
 in this repo for a complete worked example (extends `lastdream-core`).
+
+### 7.2 Extension section positioning
+
+By default, a `characterSections[]` entry declared by an extension addon
+(one whose `dependencies` reach a core addon, directly or transitively — see
+§13/§17) is appended after every section the core addon and any other active
+extension already contributed, in whatever order addons happened to compose.
+That's rarely where a GM actually wants it — a multiclass extension's
+selectors belong right next to the core addon's own identity fields, not
+after inventory/background/dossier.
+
+Set `insertAfter` or `insertBefore` (mutually exclusive — see
+[§5.3](#53-charactersection-shape)) to a target section `id` to splice your
+section next to it instead:
+
+```json
+{ "id": "multiclass_selections", "title": "Multiclass & Mixed Heritage", "layout": "grid", "fields": ["character_class_2", "subclass_2", "ancestry_2"], "insertAfter": "identity" }
+```
+
+The target is looked up by its final composed id: a core addon's own
+sections keep their original, unprefixed id (`"identity"`, `"combat"`, …),
+so that's the normal target. Targeting another extension addon's section
+means using its prefixed id (`"<that-addon-slug>__<id>"`, see the
+composition rules table in §17) — a rarer case, since it couples your addon
+to that specific other addon being installed. If the target id isn't found
+at compose time (a typo, or the addon that owns it isn't installed in that
+campaign), the section silently falls back to appending at the end rather
+than erroring — the sheet still renders, just not in the requested spot.
+Omit both props to keep the default append-at-end behavior. See
+[`duality-roads/manifest.json`](./duality-roads/manifest.json) — its
+`multiclass_selections` section sets `insertAfter: "identity"`, while
+`multiclass_notes` sets neither and stays appended at the end.
 
 ---
 
@@ -782,7 +816,7 @@ merges them with these rules:
 | Field | Merge rule |
 |---|---|
 | `characterFields` | First (primary/system) addon wins on key conflict; extra addons only add fields whose key isn't already claimed. |
-| `characterSections` | Appended in order; extra-addon section IDs are prefixed `"<addon-slug>__<id>"` to avoid collisions; a section is dropped if none of its fields survived composition. |
+| `characterSections` | Appended in order by default, or spliced next to a target via `insertAfter`/`insertBefore` (see [§7.2](#72-extension-section-positioning)); extra-addon section IDs are prefixed `"<addon-slug>__<id>"` to avoid collisions; a section is dropped if none of its fields survived composition. |
 | `adversaryFields` / `adversarySections` | Same rules as above, independently. |
 | `itemTypes` | First addon wins on key conflict. Each addon gets its own `"default"` item type injected before merge (see [§6](#6-items)). |
 | `diceDefinitions` | First addon wins on key conflict. |

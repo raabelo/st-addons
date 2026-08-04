@@ -23,7 +23,7 @@
       { "key": "multiclass_notes", "label": "Multiclass & Mixed Heritage Notes", "type": "textarea", "section": "multiclass_notes" }
     ],
     "characterSections": [
-      { "id": "multiclass_selections", "title": "Multiclass & Mixed Heritage", "layout": "grid", "fields": ["character_class_2", "subclass_2", "ancestry_2", "second_class_domain"] },
+      { "id": "multiclass_selections", "title": "Multiclass & Mixed Heritage", "layout": "grid", "fields": ["character_class_2", "subclass_2", "ancestry_2", "second_class_domain"], "insertAfter": "identity" },
       { "id": "multiclass_notes", "title": "Multiclass & Mixed Heritage Notes", "layout": "list", "fields": ["multiclass_notes"] }
     ]
   }
