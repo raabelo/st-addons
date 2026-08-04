@@ -2,7 +2,7 @@
   "addon": {
     "slug": "the-first-dream",
     "name": "The First Dream",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "An expansion of new classes and subclasses for the Lastdream setting. Requires Lastdream Core. Adds four playable classes Warlock, Assassin, Witch, and Brawler — each with two subclasses and full ability presets.",
     "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/the-first-dream",
     "author": "atelier.dev",
@@ -19,7 +19,7 @@
       "class": [
         {
           "key": "warlock",
-          "aliases": { "en": "Warlock", "pt": "Bruxo", "es": "Brujo", "fr": "Occultiste" },
+          "aliases": { "en": "Warlock", "pt": "Ocultista", "es": "Brujo", "fr": "Occultiste" },
           "fieldValues": {
             "evasion": 11,
             "hit_points": { "max": 6 },
@@ -51,7 +51,7 @@
         },
         {
           "key": "witch",
-          "aliases": { "en": "Witch", "pt": "Feiticeira", "es": "Bruja", "fr": "Sorcière" },
+          "aliases": { "en": "Witch", "pt": "Bruxa", "es": "Bruja", "fr": "Sorcière" },
           "fieldValues": {
             "evasion": 10,
             "hit_points": { "max": 5 },
