@@ -441,6 +441,7 @@ PresetEntry = {
   aliases: Record<localeCode, string>;  // must include at least "en"; locale codes like "en" or "en-US"
   fieldValues?: Record<fieldKey, PresetFieldValue>;
   requiresClass?: string;       // child-side dependency, e.g. a subclass preset referencing its parent class preset key
+  customFields?: PresetCustomField[];  // max 20 — see §7.3
 }
 
 PresetFieldValue =
@@ -525,6 +526,97 @@ Omit both props to keep the default append-at-end behavior. See
 [`duality-roads/manifest.json`](./duality-roads/manifest.json) — its
 `multiclass_selections` section sets `insertAfter: "identity"`, while
 `multiclass_notes` sets neither and stays appended at the end.
+
+### 7.3 Preset-driven custom fields
+
+`fieldValues` can only write into fields your `characterFields[]` already
+declares. Some class/subclass features need a field that doesn't exist
+until the player actually picks that specific option — e.g. Lastdream's
+Wizard has "Strange Patterns": the player chooses a number from 1 to 12
+that isn't meaningful for any other class, so it has no business being a
+static field on every character.
+
+A `PresetEntry` can declare `customFields`: full field definitions that
+materialize onto the character's sheet only once that preset is picked.
+Each entry reuses the `CharacterField` shape (§5.1), minus the props that
+only make sense for a field declared statically (`section`,
+`presetCategory`, `requiresClassField`, `visibleWhen`, `weaponSlots`,
+`armorSlots` — a custom field's own preset choice already *is* its
+visibility condition):
+
+```ts
+PresetCustomField = {
+  key: string;      // must be unique across the WHOLE character sheet — pick something specific
+  label: string;
+  type: FieldType;
+  required?: boolean;
+  options?: string[];
+  min?: number;
+  max?: number;
+  capacity?: number;
+  capacityFrom?: string;
+  iconType?: string;
+  flags?: FieldFlags;
+  default?: string | number | boolean;
+  labelFrom?: string;
+  linkedItemType?: string;
+}
+```
+
+`lastdream-core/manifest.json`'s `presets.class[]` "wizard" entry:
+
+```json
+{
+  "key": "wizard",
+  "aliases": { "en": "Wizard", "pt": "Mago", "es": "Mago", "fr": "Magicien" },
+  "fieldValues": { "evasion": 11, "hit_points": { "max": 5 }, "domains": ["codex", "splendor"], "..." },
+  "customFields": [
+    { "key": "wizard_strange_patterns_number", "label": "Strange Patterns", "type": "number", "min": 1, "max": 12 }
+  ]
+}
+```
+
+There's no `integer` flag or other special validation for a "choose a
+number" field — it's just a plain `number` field with `min`/`max`, exactly
+like any other numeric field on the sheet.
+
+**Where it lands.** Every materialized custom field from a given `presets`
+category is grouped into **one** synthetic section per category (not one
+per preset entry, so e.g. every Wizard subclass's custom fields end up in
+the same place instead of each spawning its own section). Configure that
+section's title and placement per category at the addon top level:
+
+```json
+{
+  "presetCustomFieldSections": {
+    "class": { "title": "Class Features", "insertAfter": "identity" }
+  }
+}
+```
+
+Same shape and `insertAfter`/`insertBefore` semantics as §7.2 — resolved
+against the sheet's already-built sections, falling back to append-at-end
+if the target id isn't found. A category with no `presetCustomFieldSections`
+entry still works; the synthetic section just falls back to using the
+category key itself as its title.
+
+**Key uniqueness.** A custom field's `key` must be globally unique across
+the character — same rule as `characterFields[].key`. Picking a key that
+collides with a static field, or with a custom field a *different* preset
+already materialized, is rejected in the confirmation modal before
+anything is written; re-picking the *same* preset that already produced a
+given key is a no-op, not a collision, so reselecting an already-chosen
+subclass doesn't error.
+
+**What happens if the player later changes their pick** (e.g. switches
+subclass)? The previously-materialized custom field and whatever value the
+player entered are **kept**, not deleted — matching how the rest of the
+presets system is non-destructive (fill-only-if-empty, no silent
+overwrites). It becomes an ordinary, still-editable field with no preset
+tied to it anymore.
+
+See `docs/preset-custom-fields-system.md` in the main `saving-throw` repo
+for the full design rationale.
 
 ---
 
@@ -822,6 +914,7 @@ merges them with these rules:
 | `diceDefinitions` | First addon wins on key conflict. |
 | `promptTemplates` | First addon wins on key conflict. |
 | `presets` | **Concatenated per category** across all active addons (not first-wins) — e.g. a homebrew addon's `presets.class` entries are additive to the system addon's. A key collision within the same category across two different addons throws at composition time. |
+| `presetCustomFieldSections` | First addon to configure a category wins (same as `promptTemplates`) — see [§7.3](#73-preset-driven-custom-fields). |
 | `enableSkillUse` | `true` if *any* active addon sets it. |
 
 Practical implications for addon authors:
