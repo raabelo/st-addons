@@ -2,7 +2,7 @@
   "addon": {
     "slug": "lastdream-core",
     "name": "Lastdream Core",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "description": "Core ruleset for the Lastdream setting. Defines character schema, ability scores, combat stats, and standard dice mechanics.",
     "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/lastdream-core",
     "author": "atelier.dev",
