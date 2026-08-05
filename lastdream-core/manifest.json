@@ -250,10 +250,18 @@
               { "title": "Not This Time", "description": "Spend 3 Hope to force an adversary within Far range to reroll an attack or damage roll." }
             ],
             "class_abilities": [
-              { "title": "Prestidigitation", "description": "You can perform harmless, subtle magical effects at will. For example, you can change an object's color, create a smell, light a candle, cause a tiny object to float, illuminate a room, or repair a small object." },
-              { "title": "Strange Patterns", "description": "Choose a number between 1 and 12. When you roll that number on a Duality Die, gain a Hope or clear a Stress. You can change this number when you take a long rest." }
+              { "title": "Prestidigitation", "description": "You can perform harmless, subtle magical effects at will. For example, you can change an object's color, create a smell, light a candle, cause a tiny object to float, illuminate a room, or repair a small object." }
             ]
-          }
+          },
+          "customFields": [
+            {
+              "key": "wizard_strange_patterns_number",
+              "label": "Strange Patterns",
+              "type": "number",
+              "min": 1,
+              "max": 12
+            }
+          ]
         }
       ],
       "subclass": [
@@ -537,6 +545,9 @@
         { "key": "splendor", "aliases": { "en": "Splendor", "pt": "Esplendor",  "es": "Esplendor",  "fr": "Splendeur" } },
         { "key": "valor",    "aliases": { "en": "Valor",    "pt": "Valor",      "es": "Valor",      "fr": "Valeur" } }
       ]
+    },
+    "presetCustomFieldSections": {
+      "class": { "title": "Class Features", "insertAfter": "identity" }
     },
     "adversaryFields": [
       { "key": "character_name",          "label": "Name",                 "type": "text",            "section": "identity", "required": true },
