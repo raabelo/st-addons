@@ -409,13 +409,31 @@ side).
 }
 ```
 
-Every addon automatically receives a `"default"` item type
-(`{ key: "default", label: "Default", fields: [{ key: "description", label: "Description", type: "richtext" }] }`)
-if it doesn't declare its own override for that key — so items can always
-be created even by addons with no `itemTypes` of their own.
+Every composition automatically receives a **system-default baseline** of
+five addon-independent item types — `default`, `weapon`, `armor`, `artifact`,
+`consumable` — so items can always be created even by addons that declare no
+`itemTypes` of their own, and so a Library (standalone, no-addon) item can
+still pick a meaningful type. All five are deliberately generic: a single
+required `description` (richtext) field, nothing else. Your addon (as the
+system/primary addon in a campaign's composition) can override any of these
+five keys by declaring its own `itemTypes` entry with a matching key to
+**extend** it with mechanics-specific fields (lastdream-core's `weapon`
+override just adds `damage_dice`, `wield_type`, `feature`, etc. — it doesn't
+redeclare `description`), and can add entirely new, addon-specific types on
+top (e.g. `boots`) — those follow the normal first-addon-wins merge rule
+against other installed addons.
+
+Every item type — system-default, an addon's override, or a brand-new
+addon-specific type — always shows a required `description` field, even if
+you never declare one yourself: composition auto-appends it to any itemType
+that doesn't already declare its own `description` key. You only ever need
+to declare `description` explicitly if you want to customize its `label` or
+add validation beyond "required."
 
 `characterFields[].linkedItemType` wires a character field's "@"
-autocomplete to search a given item type (or `"default"`).
+autocomplete to search a given item type — either one your addon declares, or
+one of the five system-default keys above (`default`, `weapon`, `armor`,
+`artifact`, `consumable`), even if your addon never declares it locally.
 
 ---
 
@@ -910,7 +928,7 @@ merges them with these rules:
 | `characterFields` | First (primary/system) addon wins on key conflict; extra addons only add fields whose key isn't already claimed. |
 | `characterSections` | Appended in order by default, or spliced next to a target via `insertAfter`/`insertBefore` (see [§7.2](#72-extension-section-positioning)); extra-addon section IDs are prefixed `"<addon-slug>__<id>"` to avoid collisions; a section is dropped if none of its fields survived composition. |
 | `adversaryFields` / `adversarySections` | Same rules as above, independently. |
-| `itemTypes` | First addon wins on key conflict. Each addon gets its own `"default"` item type injected before merge (see [§6](#6-items)). |
+| `itemTypes` | Seeded with the 5 system-default types (`default`/`weapon`/`armor`/`artifact`/`consumable`) as a baseline; the system addon may override any of those keys and add new ones, then first addon wins on key conflict for extras. Every resulting itemType gets a required `description` field auto-appended if it doesn't already declare one (see [§6](#6-items)). |
 | `diceDefinitions` | First addon wins on key conflict. |
 | `promptTemplates` | First addon wins on key conflict. |
 | `presets` | **Concatenated per category** across all active addons (not first-wins) — e.g. a homebrew addon's `presets.class` entries are additive to the system addon's. A key collision within the same category across two different addons throws at composition time. |
