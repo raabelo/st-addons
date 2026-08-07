@@ -297,7 +297,7 @@ to diverge over time — thresholds, tiers, action economy).
   labelFrom?: string;         // key whose runtime value supplies the quickroll label
   weaponSlots?: { primary?: WeaponSlotConfig; secondary?: WeaponSlotConfig }; // only for type: "weapon_loadout"
   armorSlots?: ArmorSlotConfig;  // only for type: "armor_piece"
-  linkedItemType?: string;    // itemTypes[].key this field's "@" autocomplete searches, or "default"
+  linkedItemType?: string;    // itemTypes[].key this field's "@" autocomplete searches, "default", or "*" (any type)
   visibleWhen?: { field: string; presetKey: string };  // only render once `field` resolves to `presetKey`
   presetCategory?: string;    // explicit override — which `presets` category backs this field, instead of
                                 // inferring it from the field's own key (see §7) — lets a second field bind
@@ -433,7 +433,10 @@ add validation beyond "required."
 `characterFields[].linkedItemType` wires a character field's "@"
 autocomplete to search a given item type — either one your addon declares, or
 one of the five system-default keys above (`default`, `weapon`, `armor`,
-`artifact`, `consumable`), even if your addon never declares it locally.
+`artifact`, `consumable`), even if your addon never declares it locally. Set
+it to the literal `"*"` instead of a specific key to search across **all**
+item types — useful for an open-ended field like a generic inventory list,
+where entries could be any kind of item rather than one fixed type.
 
 ---
 
