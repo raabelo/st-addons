@@ -2,7 +2,7 @@
   "addon": {
     "slug": "lastdream-core",
     "name": "Lastdream Core",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Core ruleset for the Lastdream setting. Defines character schema, ability scores, combat stats, and standard dice mechanics.",
     "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/lastdream-core",
     "author": "atelier.dev",
@@ -91,7 +91,7 @@
       { "key": "gold_handfuls",    "label": "Handfuls",       "type": "number",           "section": "inventory_gold", "min": 0, "default": 0 },
       { "key": "gold_bags",        "label": "Bags",           "type": "number",           "section": "inventory_gold", "min": 0, "default": 0 },
       { "key": "gold_chests",      "label": "Chests",         "type": "number",           "section": "inventory_gold", "min": 0, "default": 0 },
-      { "key": "inventory_items",  "label": "Items",          "type": "dynamic_list",     "section": "inventory" },
+      { "key": "inventory_items",  "label": "Items",          "type": "dynamic_list",     "section": "inventory",  "linkedItemType": "*" },
       { "key": "hope_ability",     "label": "Hope Ability",   "type": "ability_card_list","section": "abilities",  "max": 1 },
       { "key": "class_abilities",  "label": "Class Abilities","type": "ability_card_list","section": "abilities" },
       { "key": "domain_abilities", "label": "Domain Abilities","type": "domain_card_list","section": "abilities" },
