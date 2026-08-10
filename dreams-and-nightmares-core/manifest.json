@@ -6,7 +6,7 @@
     "types": ["CORE", "RULES"],
     "author": "atelier.dev",
     "license": { "type": "original" },
-    "version": "1.1.0",
+    "version": "1.1.1",
     "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/dreams-and-nightmares/dreams-and-nightmares.webp",
     "thumbnailWideUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/dreams-and-nightmares/dreams-and-nightmares-landscape.webp",
     "description": "Core ruleset for the Dreams & Nightmares setting. Defines character schema, ability scores, combat stats, and standard dice mechanics.",
@@ -106,7 +106,7 @@
       { "key": "spell_slots_7", "type": "resource", "label": "Level 7 Slots", "section": "spellcasting" },
       { "key": "spell_slots_8", "type": "resource", "label": "Level 8 Slots", "section": "spellcasting" },
       { "key": "spell_slots_9", "type": "resource", "label": "Level 9 Slots", "section": "spellcasting" },
-      { "key": "spells_known", "type": "ability_card_list", "label": "Spells", "section": "spellcasting" },
+      { "key": "spells_known", "type": "ability_card_list", "label": "Spells", "section": "spells" },
       { "key": "personality_traits", "type": "textarea", "label": "Personality Traits", "section": "personality" },
       { "key": "ideals", "type": "textarea", "label": "Ideals", "section": "personality" },
       { "key": "bonds", "type": "textarea", "label": "Bonds", "section": "personality" },
@@ -131,7 +131,8 @@
       { "id": "death_saves", "title": "Death Saves", "fields": ["death_save_successes", "death_save_failures"], "layout": "grid" },
       { "id": "senses_languages", "title": "Senses & Languages", "fields": ["darkvision", "blindsight", "tremorsense", "truesight", "languages"], "layout": "grid" },
       { "id": "resistances_immunities", "title": "Resistances & Immunities", "fields": ["damage_resistances", "damage_immunities", "damage_vulnerabilities", "condition_immunities"], "layout": "list" },
-      { "id": "spellcasting", "title": "Spellcasting", "fields": ["spellcasting_ability", "spell_save_dc", "spell_attack_bonus", "cantrips_known", "spell_slots_1", "spell_slots_2", "spell_slots_3", "spell_slots_4", "spell_slots_5", "spell_slots_6", "spell_slots_7", "spell_slots_8", "spell_slots_9", "spells_known"], "layout": "grid" },
+      { "id": "spellcasting", "title": "Spellcasting", "fields": ["spellcasting_ability", "spell_save_dc", "spell_attack_bonus", "cantrips_known", "spell_slots_1", "spell_slots_2", "spell_slots_3", "spell_slots_4", "spell_slots_5", "spell_slots_6", "spell_slots_7", "spell_slots_8", "spell_slots_9"], "layout": "grid" },
+      { "id": "spells", "title": "Spells", "fields": ["spells_known"], "layout": "list" },
       { "id": "personality", "title": "Personality", "fields": ["personality_traits", "ideals", "bonds", "flaws"], "layout": "list" }
     ],
     "adversaryFields": [
