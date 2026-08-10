@@ -6,7 +6,7 @@
     "types": ["CORE", "RULES"],
     "author": "atelier.dev",
     "license": { "type": "original" },
-    "version": "1.1.1",
+    "version": "1.1.2",
     "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/dreams-and-nightmares/dreams-and-nightmares.webp",
     "thumbnailWideUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/dreams-and-nightmares/dreams-and-nightmares-landscape.webp",
     "description": "Core ruleset for the Dreams & Nightmares setting. Defines character schema, ability scores, combat stats, and standard dice mechanics.",
@@ -136,7 +136,7 @@
       { "id": "personality", "title": "Personality", "fields": ["personality_traits", "ideals", "bonds", "flaws"], "layout": "list" }
     ],
     "adversaryFields": [
-      { "key": "monster_name", "label": "Name", "type": "text", "section": "identity", "required": true },
+      { "key": "character_name", "label": "Name", "type": "text", "section": "identity", "required": true },
       { "key": "size", "label": "Size", "type": "select", "options": ["Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"], "section": "identity" },
       { "key": "creature_type", "label": "Creature Type", "type": "select", "options": ["Aberration", "Beast", "Celestial", "Construct", "Dragon", "Elemental", "Fey", "Fiend", "Giant", "Humanoid", "Monstrosity", "Ooze", "Plant", "Undead"], "section": "identity" },
       { "key": "alignment", "label": "Alignment", "type": "text", "section": "identity" },
@@ -174,7 +174,7 @@
       { "key": "reference_images", "label": "Reference Images", "type": "image_dossier", "section": "dossier" }
     ],
     "adversarySections": [
-      { "id": "identity", "title": "Identity", "fields": ["monster_name", "size", "creature_type", "alignment"], "layout": "grid" },
+      { "id": "identity", "title": "Identity", "fields": ["character_name", "size", "creature_type", "alignment"], "layout": "grid" },
       { "id": "combat", "title": "Combat", "fields": ["armor_class", "hit_points", "hit_dice", "speed", "speed_fly", "speed_swim", "speed_climb", "speed_burrow", "challenge_rating", "experience_points"], "layout": "grid" },
       { "id": "ability_scores", "title": "Ability Scores", "fields": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"], "layout": "grid" },
       { "id": "saves_skills", "title": "Saving Throws & Skills", "fields": ["saving_throws", "skills"], "layout": "list" },
