@@ -1,0 +1,9 @@
+{
+  "fromVersion": "1.1.2",
+  "toVersion": "1.2.0",
+  "operations": [
+    { "op": "changeType", "field": "character_class", "transform": "toString" },
+    { "op": "changeType", "field": "background", "transform": "toString" },
+    { "op": "changeType", "field": "race", "transform": "toString" }
+  ]
+}

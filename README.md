@@ -1042,6 +1042,41 @@ MigrationOperation =
 Plan field keys as **permanent identifiers** — treat a `key` rename as a
 breaking change requiring a migration file, not just a manifest edit.
 
+### 18.1 Migration files are required, not optional, for breaking bumps
+
+The publish pipeline classifies every version bump as **compatible** (new
+fields only) or **breaking** (any existing `characterFields`/`adversaryFields`
+key dropped, renamed, or retyped). A breaking bump is **rejected outright**
+unless it's submitted together with a migration file that fully explains
+every dropped/renamed/retyped field — you'll see an error like:
+
+```
+Mudança incompatível detectada: field 'x' changed type from 'text' to
+'select'. Este é um salto de versão maior — informe um arquivo de migração
+explicando cada campo removido/renomeado/retipado antes de publicar.
+```
+
+To fix it, add `migrations/{fromVersion}_to_{toVersion}.json` next to your
+`manifest.json`:
+
+```
+your-addon/
+  manifest.json
+  migrations/
+    1.1.0_to_1.2.0.json
+```
+
+Every field the diff shows as dropped, renamed, or retyped between
+`fromVersion` and `toVersion` must be covered by exactly one operation in
+that file (§18's four operation types) — an unexplained diff, or a missing
+migration file entirely, blocks publish. `changeType` doesn't require the
+underlying stored value to actually change shape: e.g. a `text` field
+becoming a `select` with `flags.allowCustom: true` can use
+`transform: "toString"` as a no-op — existing free-text values that match
+an option keep working, and values that don't just remain editable free
+text via the combobox fallback. Use `renameField`/`dropField`/`addField`
+for the other three cases.
+
 ---
 
 ## 19. Validation checklist
