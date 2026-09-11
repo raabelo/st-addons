@@ -25,7 +25,7 @@ engine package that validate every manifest before it's accepted.
 3. [Repository layout](#3-repository-layout)
 4. [Full manifest.json spec](#4-full-manifestjson-spec)
 5. [Character (and adversary) schema authoring](#5-character-and-adversary-schema-authoring)
-6. [Items](#6-items)
+6. [Items and organizations](#6-items-and-organizations)
 7. [Presets](#7-presets)
 8. [Dice systems](#8-dice-systems)
 9. [Dice skins](#9-dice-skins)
@@ -204,7 +204,8 @@ Every manifest is a single JSON object with one top-level key, `addon`:
 | `characterSections` | `array<CharacterSection>` | max 20 | PC sheet layout grouping — see [§5](#5-character-and-adversary-schema-authoring). |
 | `adversaryFields` | `array<AdversaryField>` | max 200 | GM-side NPC/monster statblock fields — same shape as `characterFields`. |
 | `adversarySections` | `array<AdversarySection>` | max 20 | NPC statblock layout grouping. |
-| `itemTypes` | `array<ItemType>` | max 50 | Inventory item type definitions — see [§6](#6-items). |
+| `itemTypes` | `array<ItemType>` | max 50 | Inventory item type definitions — see [§6.1](#61-item-types). |
+| `orgTypes` | `array<OrgType>` | max 50 | Organization type definitions (guilds, cults, factions, etc.) — see [§6.2](#62-organization-types). |
 | `presets` | `Record<category, PresetEntry[]>` | max 60 entries per category | Named option sets (classes, ancestries, etc.) — see [§7](#7-presets). |
 | `promptTemplates` | `Record<key, string>` | key regex `^[a-z_][a-z0-9_]*$`, max 64 chars | AI prompt fragments — requires `PROMPT` type + `ai:prompt` capability — see [§11](#11-prompt-templates-prompt-addons). |
 | `diceDefinitions` | `array<DiceDefinition>` | max 20 | Named dice notations — requires `dice:custom` capability — see [§8](#8-dice-systems). |
@@ -253,6 +254,7 @@ even if every individual field is otherwise well-typed:
 - same two `labelFrom`/`quickRollDice` rules apply to `adversaryFields[]`
 - `itemTypes[].key` must be unique within the addon
 - `characterFields[].linkedItemType` (if set) must reference an existing `itemTypes[].key`, or be the literal `"default"`
+- `orgTypes[].key` must be unique within the addon
 - `presets[category][].key` must be unique within its category
 - `characterFields[].flags.allowCustom` may only be `true` when `type` is `"select"`
 - if both `presets.class` and `presets.domain` exist, every `presets.class[].fieldValues.domains` string value must reference a `presets.domain[].key` in the same addon (cross-addon references are only validated at composition time, not per-addon)
@@ -392,7 +394,9 @@ template for a new system addon.
 
 ---
 
-## 6. Items
+## 6. Items and organizations
+
+### 6.1 Item types
 
 `itemTypes` defines structured inventory item types (weapons, gear,
 consumables, etc.) reusing the same field vocabulary as character fields
@@ -437,6 +441,68 @@ one of the five system-default keys above (`default`, `weapon`, `armor`,
 it to the literal `"*"` instead of a specific key to search across **all**
 item types — useful for an open-ended field like a generic inventory list,
 where entries could be any kind of item rather than one fixed type.
+
+### 6.2 Organization types
+
+`orgTypes` defines structured organization types (guilds, cults, clans,
+governments, and the like) that a GM or player can create standalone (in the
+Library) or within a campaign — e.g. a faction, cabal, or merchant house.
+Same shape/composition semantics as `itemTypes` above, minus `linkableFrom`:
+there is currently no character field type analogous to `weapon_loadout`
+that "@"-links into an org type.
+
+```ts
+{
+  key: string;       // snake_case
+  label: string;      // 1-64 chars
+  fields: ItemField[]; // max 50 — same shape as ItemType fields (reuses the CharacterField vocabulary)
+}
+```
+
+Every composition automatically receives a **system-default baseline** of
+seven addon-independent org types — `group`, `guild`, `clan`, `cult`,
+`government`, `gang`, `family` — so organizations can always be created even
+by addons that declare no `orgTypes` of their own, and so a Library
+(standalone, no-addon) organization can still pick a meaningful type. All
+seven are deliberately generic: a single required `description` (richtext)
+field, nothing else. Your addon (as the system/primary addon in a campaign's
+composition) can override any of these seven keys by declaring its own
+`orgTypes` entry with a matching key to **extend** it with mechanics-specific
+fields, and can add entirely new, addon-specific types on top (e.g. `cabal`)
+— those follow the normal first-addon-wins merge rule against other
+installed addons.
+
+Every org type — system-default, an addon's override, or a brand-new
+addon-specific type — always shows a required `description` field, even if
+you never declare one yourself: composition auto-appends it to any orgType
+that doesn't already declare its own `description` key, exactly like
+`itemTypes` (§6.1).
+
+```json
+{
+  "orgTypes": [
+    {
+      "key": "guild",
+      "label": "Guild",
+      "fields": [
+        { "key": "description", "label": "Description", "type": "richtext", "required": true },
+        { "key": "specialty", "label": "Specialty", "type": "select", "options": ["Crafting", "Trade", "Mercenary"] }
+      ]
+    },
+    {
+      "key": "cabal",
+      "label": "Cabal",
+      "fields": [
+        { "key": "patron_entity", "label": "Patron Entity", "type": "text" }
+      ]
+    }
+  ]
+}
+```
+
+The first entry above **overrides** the system-default `guild` (adding a
+`specialty` field on top of the auto-appended `description`); the second
+declares a brand-new `cabal` type not present in the system baseline.
 
 ---
 
@@ -931,7 +997,8 @@ merges them with these rules:
 | `characterFields` | First (primary/system) addon wins on key conflict; extra addons only add fields whose key isn't already claimed. |
 | `characterSections` | Appended in order by default, or spliced next to a target via `insertAfter`/`insertBefore` (see [§7.2](#72-extension-section-positioning)); extra-addon section IDs are prefixed `"<addon-slug>__<id>"` to avoid collisions; a section is dropped if none of its fields survived composition. |
 | `adversaryFields` / `adversarySections` | Same rules as above, independently. |
-| `itemTypes` | Seeded with the 5 system-default types (`default`/`weapon`/`armor`/`artifact`/`consumable`) as a baseline; the system addon may override any of those keys and add new ones, then first addon wins on key conflict for extras. Every resulting itemType gets a required `description` field auto-appended if it doesn't already declare one (see [§6](#6-items)). |
+| `itemTypes` | Seeded with the 5 system-default types (`default`/`weapon`/`armor`/`artifact`/`consumable`) as a baseline; the system addon may override any of those keys and add new ones, then first addon wins on key conflict for extras. Every resulting itemType gets a required `description` field auto-appended if it doesn't already declare one (see [§6.1](#61-item-types)). |
+| `orgTypes` | Same seeding/override rules as `itemTypes`, seeded with the 7 system-default types (`group`/`guild`/`clan`/`cult`/`government`/`gang`/`family`) instead — see [§6.2](#62-organization-types). |
 | `diceDefinitions` | First addon wins on key conflict. |
 | `promptTemplates` | First addon wins on key conflict. |
 | `presets` | **Concatenated per category** across all active addons (not first-wins) — e.g. a homebrew addon's `presets.class` entries are additive to the system addon's. A key collision within the same category across two different addons throws at composition time. |
@@ -940,7 +1007,7 @@ merges them with these rules:
 
 Practical implications for addon authors:
 
-- Pick field/section/item-type/dice/prompt keys unlikely to collide with a
+- Pick field/section/item-type/org-type/dice/prompt keys unlikely to collide with a
   well-known system addon if you intend your addon to *extend* an existing
   system rather than replace it.
 - If you're building presets meant to extend another addon's category
@@ -987,9 +1054,9 @@ the whole manifest:
 - [ ] `version` is strict `major.minor.patch` semver, no pre-release suffix
 - [ ] `repositoryUrl` (and every other URL field: `thumbnailUrl`, `assetBaseUrl`, `license.sourceUrl`, `integrations[].endpoint`) is `https://`
 - [ ] No field contains raw HTML — every text field is checked against `/<[^>]*>/`
-- [ ] `characterFields` ≤ 200, `characterSections` ≤ 20, `adversaryFields` ≤ 200, `adversarySections` ≤ 20, `itemTypes` ≤ 50, `diceDefinitions` ≤ 20, `diceSkins` ≤ 20, `quickRolls` ≤ 20, `integrations` ≤ 5, `dependencies` ≤ 20, `capabilities` ≤ 12, `options` per field ≤ 100
+- [ ] `characterFields` ≤ 200, `characterSections` ≤ 20, `adversaryFields` ≤ 200, `adversarySections` ≤ 20, `itemTypes` ≤ 50, `orgTypes` ≤ 50, `diceDefinitions` ≤ 20, `diceSkins` ≤ 20, `quickRolls` ≤ 20, `integrations` ≤ 5, `dependencies` ≤ 20, `capabilities` ≤ 12, `options` per field ≤ 100
 - [ ] `capabilities` matches declared usage: `PROMPT` type ⇒ `ai:prompt`; `INTEGRATION` type ⇒ `integration:external`; any `diceDefinitions` ⇒ `dice:custom`; any `diceSkins` ⇒ `dice:skin`; any `promptTemplates` ⇒ `ai:prompt`; any `integrations` ⇒ `integration:external`
-- [ ] All `key` fields are snake_case (`^[a-z_][a-z0-9_]*$`) and unique where uniqueness is required (dice skins, item types, presets per category)
+- [ ] All `key` fields are snake_case (`^[a-z_][a-z0-9_]*$`) and unique where uniqueness is required (dice skins, item types, org types, presets per category)
 - [ ] `labelFrom`, `linkedItemType`, `visibleWhen.field` all reference real, existing keys within your own manifest
 - [ ] `flags.allowCustom` only set on `type: "select"` fields
 - [ ] `flags.quickRollDice: true` always paired with a `labelFrom`
