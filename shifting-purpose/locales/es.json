@@ -1,0 +1,13 @@
+{
+  "name": "Propósito Cambiante",
+  "description": "Extensión para Dreams & Nightmares Core que añade multiclase opcional al estilo D&D 5e: una segunda clase y ranura de nivel, inspirada en las reglas de multiclase del PHB.",
+  "fields": {
+    "character_class_2": "Segunda Clase",
+    "level_2": "Nivel de la Segunda Clase",
+    "multiclass_spellcaster_note": "Notas de Lanzador de Conjuros Multiclase"
+  },
+  "sections": {
+    "multiclass_selections": "Multiclase",
+    "multiclass_notes": "Notas de Multiclase"
+  }
+}

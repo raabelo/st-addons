@@ -1,0 +1,13 @@
+{
+  "name": "Propósito Mutável",
+  "description": "Extensão para o Dreams & Nightmares Core que adiciona multiclasse opcional ao estilo D&D 5e: uma segunda classe e slot de nível, inspirada nas regras de multiclasse do PHB.",
+  "fields": {
+    "character_class_2": "Segunda Classe",
+    "level_2": "Nível da Segunda Classe",
+    "multiclass_spellcaster_note": "Notas de Conjurador Multiclasse"
+  },
+  "sections": {
+    "multiclass_selections": "Multiclasse",
+    "multiclass_notes": "Notas de Multiclasse"
+  }
+}

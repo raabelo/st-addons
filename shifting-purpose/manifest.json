@@ -1,0 +1,28 @@
+{
+  "addon": {
+    "slug": "shifting-purpose",
+    "name": "Shifting Purpose",
+    "version": "1.0.0",
+    "description": "Extension for Dreams & Nightmares Core adding optional D&D 5e-style multiclassing: a second class and level slot, inspired by the PHB multiclassing rules.",
+    "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/shifting-purpose",
+    "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/shifiting-purpose/shifiting-purpose-y",
+    "thumbnailWideUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/shifiting-purpose/shifiting-purpose-x",
+    "author": "atelier.dev",
+    "license": { "type": "original" },
+    "types": ["RULES"],
+    "tags": ["fantasy", "dnd5e", "multiclass", "expansion"],
+    "capabilities": ["character:read", "character:write"],
+    "dependencies": [
+      { "slug": "dreams-and-nightmares-core", "version": "^1.2.0" }
+    ],
+    "characterFields": [
+      { "key": "character_class_2", "label": "Second Class", "type": "select", "section": "multiclass_selections", "flags": { "allowCustom": true }, "presetCategory": "class" },
+      { "key": "level_2", "label": "Second Class Level", "type": "number", "section": "multiclass_selections", "min": 1, "default": 1 },
+      { "key": "multiclass_spellcaster_note", "label": "Multiclass Spellcaster Notes", "type": "textarea", "section": "multiclass_notes", "default": "Multiclass spell slots follow the PHB multiclass spellcaster table — sum each class's caster level per that table, then set the totals into Spell Slots 1-9 on the core sheet yourself." }
+    ],
+    "characterSections": [
+      { "id": "multiclass_selections", "title": "Multiclass", "layout": "grid", "fields": ["character_class_2", "level_2"], "insertAfter": "identity" },
+      { "id": "multiclass_notes", "title": "Multiclass Notes", "layout": "list", "fields": ["multiclass_spellcaster_note"] }
+    ]
+  }
+}

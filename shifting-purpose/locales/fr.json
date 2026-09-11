@@ -1,0 +1,13 @@
+{
+  "name": "Vocation Changeante",
+  "description": "Extension pour Dreams & Nightmares Core ajoutant le multiclassage optionnel façon D&D 5e : une deuxième classe et un emplacement de niveau, inspirée des règles de multiclassage du PHB.",
+  "fields": {
+    "character_class_2": "Deuxième Classe",
+    "level_2": "Niveau de la Deuxième Classe",
+    "multiclass_spellcaster_note": "Notes de Lanceur de Sorts Multiclasse"
+  },
+  "sections": {
+    "multiclass_selections": "Multiclassage",
+    "multiclass_notes": "Notes de Multiclassage"
+  }
+}
