@@ -6,7 +6,7 @@
     "types": ["CORE", "RULES"],
     "author": "atelier.dev",
     "license": { "type": "original" },
-    "version": "1.1.2",
+    "version": "1.2.0",
     "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/dreams-and-nightmares/dreams-and-nightmares.webp",
     "thumbnailWideUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/dreams-and-nightmares/dreams-and-nightmares-landscape.webp",
     "description": "Core ruleset for the Dreams & Nightmares setting. Defines character schema, ability scores, combat stats, and standard dice mechanics.",
@@ -14,10 +14,10 @@
     "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/dreams-and-nightmares-core",
     "characterFields": [
       { "key": "character_name", "type": "text", "label": "Character Name", "section": "identity", "required": true },
-      { "key": "character_class", "type": "text", "label": "Class", "section": "identity", "required": true },
+      { "key": "character_class", "type": "select", "label": "Class", "section": "identity", "required": true, "flags": { "allowCustom": true } },
       { "key": "level", "max": 20, "min": 1, "type": "number", "label": "Level", "default": 1, "section": "identity" },
-      { "key": "background", "type": "text", "label": "Background", "section": "identity" },
-      { "key": "race", "type": "text", "label": "Race", "section": "identity", "required": true },
+      { "key": "background", "type": "select", "label": "Background", "section": "identity", "flags": { "allowCustom": true } },
+      { "key": "race", "type": "select", "label": "Race", "section": "identity", "required": true, "flags": { "allowCustom": true } },
       { "key": "size", "type": "select", "label": "Size", "options": ["Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"], "default": "Medium", "section": "identity" },
       { "key": "alignment", "type": "select", "label": "Alignment", "options": ["Lawful Good", "Neutral Good", "Chaotic Good", "Lawful Neutral", "True Neutral", "Chaotic Neutral", "Lawful Evil", "Neutral Evil", "Chaotic Evil"], "section": "identity" },
       { "key": "experience_points", "min": 0, "type": "number", "label": "Experience Points", "default": 0, "section": "identity" },
@@ -27,6 +27,7 @@
       { "key": "intelligence", "max": 30, "min": 1, "type": "number", "label": "Intelligence", "default": 10, "section": "ability_scores" },
       { "key": "wisdom", "max": 30, "min": 1, "type": "number", "label": "Wisdom", "default": 10, "section": "ability_scores" },
       { "key": "charisma", "max": 30, "min": 1, "type": "number", "label": "Charisma", "default": 10, "section": "ability_scores" },
+      { "key": "racial_traits", "type": "ability_card_list", "label": "Racial Traits", "section": "racial_traits" },
       { "key": "save_strength_proficient", "type": "boolean", "label": "Strength Save", "default": false, "section": "saving_throws" },
       { "key": "save_dexterity_proficient", "type": "boolean", "label": "Dexterity Save", "default": false, "section": "saving_throws" },
       { "key": "save_constitution_proficient", "type": "boolean", "label": "Constitution Save", "default": false, "section": "saving_throws" },
@@ -107,6 +108,47 @@
       { "key": "spell_slots_8", "type": "resource", "label": "Level 8 Slots", "section": "spellcasting" },
       { "key": "spell_slots_9", "type": "resource", "label": "Level 9 Slots", "section": "spellcasting" },
       { "key": "spells_known", "type": "ability_card_list", "label": "Spells", "section": "spells" },
+      { "key": "class_abilities", "type": "ability_card_list", "label": "Class Abilities", "section": "abilities" },
+      { "key": "feats", "type": "feature_list", "label": "Feats", "section": "feats" },
+      { "key": "weapon_primary_name", "label": "Primary Weapon Name", "type": "text", "hidden": true },
+      { "key": "weapon_primary_attribute", "label": "Primary Attribute", "type": "text", "hidden": true },
+      { "key": "weapon_primary_range", "label": "Primary Range", "type": "text", "hidden": true },
+      { "key": "weapon_primary_damage_dice", "label": "Primary Damage Dice", "type": "dice", "hidden": true, "flags": { "quickRollDice": true }, "labelFrom": "weapon_primary_name" },
+      { "key": "weapon_primary_damage_type", "label": "Primary Damage Type", "type": "text", "hidden": true },
+      { "key": "weapon_secondary_name", "label": "Secondary Weapon Name", "type": "text", "hidden": true },
+      { "key": "weapon_secondary_attribute", "label": "Secondary Attribute", "type": "text", "hidden": true },
+      { "key": "weapon_secondary_range", "label": "Secondary Range", "type": "text", "hidden": true },
+      { "key": "weapon_secondary_damage_dice", "label": "Secondary Damage Dice", "type": "dice", "hidden": true, "flags": { "quickRollDice": true }, "labelFrom": "weapon_secondary_name" },
+      { "key": "weapon_secondary_damage_type", "label": "Secondary Damage Type", "type": "text", "hidden": true },
+      { "key": "weapons", "label": "Weapons", "type": "weapon_loadout", "section": "weapons", "linkedItemType": "weapon", "weaponSlots": {
+        "primary": {
+          "nameKey": "weapon_primary_name",
+          "attributeKey": "weapon_primary_attribute",
+          "rangeKey": "weapon_primary_range",
+          "damageDiceKey": "weapon_primary_damage_dice",
+          "damageTypeKey": "weapon_primary_damage_type"
+        },
+        "secondary": {
+          "nameKey": "weapon_secondary_name",
+          "attributeKey": "weapon_secondary_attribute",
+          "rangeKey": "weapon_secondary_range",
+          "damageDiceKey": "weapon_secondary_damage_dice",
+          "damageTypeKey": "weapon_secondary_damage_type"
+        }
+      }},
+      { "key": "worn_armor_name", "label": "Armor Name", "type": "text", "hidden": true },
+      { "key": "worn_armor_base_ac", "label": "Base AC", "type": "number", "hidden": true, "min": 0 },
+      { "key": "worn_armor", "label": "Worn Armor", "type": "armor_piece", "section": "worn_armor", "linkedItemType": "armor", "armorSlots": {
+        "nameKey": "worn_armor_name",
+        "baseKey": "worn_armor_base_ac"
+      }},
+      { "key": "coins_copper", "label": "Copper", "type": "number", "min": 0, "default": 0, "section": "currency" },
+      { "key": "coins_silver", "label": "Silver", "type": "number", "min": 0, "default": 0, "section": "currency" },
+      { "key": "coins_electrum", "label": "Electrum", "type": "number", "min": 0, "default": 0, "section": "currency" },
+      { "key": "coins_gold", "label": "Gold", "type": "number", "min": 0, "default": 0, "section": "currency" },
+      { "key": "coins_platinum", "label": "Platinum", "type": "number", "min": 0, "default": 0, "section": "currency" },
+      { "key": "inventory_items", "label": "Items", "type": "dynamic_list", "section": "inventory", "linkedItemType": "*" },
+      { "key": "background_feature", "label": "Background Feature", "type": "ability_card_list", "section": "background_feature", "max": 1 },
       { "key": "personality_traits", "type": "textarea", "label": "Personality Traits", "section": "personality" },
       { "key": "ideals", "type": "textarea", "label": "Ideals", "section": "personality" },
       { "key": "bonds", "type": "textarea", "label": "Bonds", "section": "personality" },
@@ -125,6 +167,7 @@
     "characterSections": [
       { "id": "identity", "title": "Identity", "fields": ["character_name", "character_class", "level", "background", "race", "size", "alignment", "experience_points"], "layout": "grid" },
       { "id": "ability_scores", "title": "Ability Scores", "fields": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"], "layout": "grid" },
+      { "id": "racial_traits", "title": "Racial Traits", "fields": ["racial_traits"], "layout": "list" },
       { "id": "saving_throws", "title": "Saving Throw Proficiencies", "fields": ["save_strength_proficient", "save_dexterity_proficient", "save_constitution_proficient", "save_intelligence_proficient", "save_wisdom_proficient", "save_charisma_proficient"], "layout": "grid" },
       { "id": "skills", "title": "Skills", "fields": ["skill_acrobatics_proficient", "skill_acrobatics_modifier", "skill_animal_handling_proficient", "skill_animal_handling_modifier", "skill_arcana_proficient", "skill_arcana_modifier", "skill_athletics_proficient", "skill_athletics_modifier", "skill_deception_proficient", "skill_deception_modifier", "skill_history_proficient", "skill_history_modifier", "skill_insight_proficient", "skill_insight_modifier", "skill_intimidation_proficient", "skill_intimidation_modifier", "skill_investigation_proficient", "skill_investigation_modifier", "skill_medicine_proficient", "skill_medicine_modifier", "skill_nature_proficient", "skill_nature_modifier", "skill_perception_proficient", "skill_perception_modifier", "skill_performance_proficient", "skill_performance_modifier", "skill_persuasion_proficient", "skill_persuasion_modifier", "skill_religion_proficient", "skill_religion_modifier", "skill_sleight_of_hand_proficient", "skill_sleight_of_hand_modifier", "skill_stealth_proficient", "skill_stealth_modifier", "skill_survival_proficient", "skill_survival_modifier"], "layout": "grid" },
       { "id": "combat", "title": "Combat", "fields": ["hit_points", "armor_class", "initiative", "speed", "speed_fly", "speed_swim", "speed_climb", "speed_burrow", "hit_dice", "proficiency_bonus", "passive_perception", "inspiration", "concentration"], "layout": "grid" },
@@ -133,7 +176,431 @@
       { "id": "resistances_immunities", "title": "Resistances & Immunities", "fields": ["damage_resistances", "damage_immunities", "damage_vulnerabilities", "condition_immunities"], "layout": "list" },
       { "id": "spellcasting", "title": "Spellcasting", "fields": ["spellcasting_ability", "spell_save_dc", "spell_attack_bonus", "cantrips_known", "spell_slots_1", "spell_slots_2", "spell_slots_3", "spell_slots_4", "spell_slots_5", "spell_slots_6", "spell_slots_7", "spell_slots_8", "spell_slots_9"], "layout": "grid" },
       { "id": "spells", "title": "Spells", "fields": ["spells_known"], "layout": "list" },
+      { "id": "abilities", "title": "Abilities", "fields": ["class_abilities"], "layout": "list" },
+      { "id": "feats", "title": "Feats", "fields": ["feats"], "layout": "list" },
+      { "id": "weapons", "title": "Weapons", "fields": ["weapons"], "layout": "list" },
+      { "id": "worn_armor", "title": "Worn Armor", "fields": ["worn_armor"], "layout": "list" },
+      { "id": "currency", "title": "Currency", "fields": ["coins_copper", "coins_silver", "coins_electrum", "coins_gold", "coins_platinum"], "layout": "grid" },
+      { "id": "inventory", "title": "Inventory", "fields": ["inventory_items"], "layout": "list" },
+      { "id": "background_feature", "title": "Background Feature", "fields": ["background_feature"], "layout": "list" },
       { "id": "personality", "title": "Personality", "fields": ["personality_traits", "ideals", "bonds", "flaws"], "layout": "list" }
+    ],
+    "presets": {
+      "class": [
+        {
+          "key": "barbarian",
+          "aliases": { "en": "Barbarian", "pt": "Bárbaro", "es": "Bárbaro", "fr": "Barbare" },
+          "fieldValues": {
+            "save_strength_proficient": true,
+            "save_constitution_proficient": true,
+            "hit_dice": "1d12",
+            "class_abilities": [
+              { "title": "Rage", "description": "In battle, you fight with primal ferocity. You can enter a rage as a bonus action, gaining resistance to bludgeoning, piercing, and slashing damage and a bonus to melee damage rolls, but you can't cast or concentrate on spells while raging." },
+              { "title": "Unarmored Defense", "description": "While not wearing armor, your Armor Class equals 10 plus your Dexterity modifier plus your Constitution modifier. You can use a shield and still gain this benefit." }
+            ]
+          },
+          "customFields": [
+            { "key": "barbarian_rages_available", "label": "Rages per Long Rest", "type": "number", "min": 0, "default": 2 }
+          ]
+        },
+        {
+          "key": "bard",
+          "aliases": { "en": "Bard", "pt": "Bardo", "es": "Bardo", "fr": "Barde" },
+          "fieldValues": {
+            "save_dexterity_proficient": true,
+            "save_charisma_proficient": true,
+            "hit_dice": "1d8",
+            "spellcasting_ability": "Charisma",
+            "class_abilities": [
+              { "title": "Bardic Inspiration", "description": "As a bonus action, you can inspire an ally with an encouraging word, giving them a die they can add to one ability check, attack roll, or saving throw of their choice." },
+              { "title": "Spellcasting", "description": "You've learned to untangle and reshape the fabric of reality in harmony with your wishes and music, casting spells from the bard spell list using Charisma as your spellcasting ability." }
+            ]
+          },
+          "customFields": [
+            { "key": "bard_inspiration_uses", "label": "Bardic Inspiration Uses (= Cha modifier)", "type": "number", "min": 0, "default": 0 }
+          ]
+        },
+        {
+          "key": "cleric",
+          "aliases": { "en": "Cleric", "pt": "Clérigo", "es": "Clérigo", "fr": "Clerc" },
+          "fieldValues": {
+            "save_wisdom_proficient": true,
+            "save_charisma_proficient": true,
+            "hit_dice": "1d8",
+            "spellcasting_ability": "Wisdom",
+            "class_abilities": [
+              { "title": "Spellcasting", "description": "As a conduit for divine power, you can cast cleric spells, drawing on the power of your deity using Wisdom as your spellcasting ability." },
+              { "title": "Divine Domain", "description": "You choose a domain related to your deity, granting you domain spells and other features related to that domain." }
+            ]
+          }
+        },
+        {
+          "key": "druid",
+          "aliases": { "en": "Druid", "pt": "Druida", "es": "Druida", "fr": "Druide" },
+          "fieldValues": {
+            "save_intelligence_proficient": true,
+            "save_wisdom_proficient": true,
+            "hit_dice": "1d8",
+            "spellcasting_ability": "Wisdom",
+            "class_abilities": [
+              { "title": "Druidic", "description": "You know Druidic, the secret language of druids, letting you leave hidden messages and recognize others who know it." },
+              { "title": "Spellcasting", "description": "Drawing on the divine essence of nature itself, you can cast druid spells using Wisdom as your spellcasting ability." }
+            ]
+          }
+        },
+        {
+          "key": "fighter",
+          "aliases": { "en": "Fighter", "pt": "Guerreiro", "es": "Guerrero", "fr": "Guerrier" },
+          "fieldValues": {
+            "save_strength_proficient": true,
+            "save_constitution_proficient": true,
+            "hit_dice": "1d10",
+            "class_abilities": [
+              { "title": "Fighting Style", "description": "You adopt a particular style of fighting as your specialty, such as archery, defense, dueling, or great weapon fighting, gaining an associated benefit." },
+              { "title": "Second Wind", "description": "You have a limited well of stamina you can draw on to protect yourself from harm. As a bonus action, you can regain a small amount of hit points once per short or long rest." }
+            ]
+          },
+          "customFields": [
+            { "key": "fighter_second_wind_used", "label": "Second Wind Used", "type": "boolean", "default": false }
+          ]
+        },
+        {
+          "key": "monk",
+          "aliases": { "en": "Monk", "pt": "Monge", "es": "Monje", "fr": "Moine" },
+          "fieldValues": {
+            "save_strength_proficient": true,
+            "save_dexterity_proficient": true,
+            "hit_dice": "1d8",
+            "class_abilities": [
+              { "title": "Unarmored Defense", "description": "While not wearing armor or wielding a shield, your Armor Class equals 10 plus your Dexterity modifier plus your Wisdom modifier." },
+              { "title": "Martial Arts", "description": "Your practice of martial arts gives you mastery of combat styles using unarmed strikes and monk weapons, letting you use Dexterity instead of Strength for attack and damage rolls with them." }
+            ]
+          }
+        },
+        {
+          "key": "paladin",
+          "aliases": { "en": "Paladin", "pt": "Paladino", "es": "Paladín", "fr": "Paladin" },
+          "fieldValues": {
+            "save_wisdom_proficient": true,
+            "save_charisma_proficient": true,
+            "hit_dice": "1d10",
+            "spellcasting_ability": "Charisma",
+            "class_abilities": [
+              { "title": "Divine Sense", "description": "The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears. You can open your awareness to detect celestials, fiends, and undead within a limited range a few times per long rest." },
+              { "title": "Lay on Hands", "description": "Your blessed touch can heal wounds, drawing on a pool of healing power that replenishes when you take a long rest." }
+            ]
+          },
+          "customFields": [
+            { "key": "paladin_lay_on_hands_pool", "label": "Lay on Hands Pool (5 x Level)", "type": "number", "min": 0, "default": 5 }
+          ]
+        },
+        {
+          "key": "ranger",
+          "aliases": { "en": "Ranger", "pt": "Patrulheiro", "es": "Explorador", "fr": "Rôdeur" },
+          "fieldValues": {
+            "save_strength_proficient": true,
+            "save_dexterity_proficient": true,
+            "hit_dice": "1d10",
+            "spellcasting_ability": "Wisdom",
+            "class_abilities": [
+              { "title": "Favored Enemy", "description": "You have significant experience studying, tracking, hunting, and even talking to a certain type of enemy, gaining benefits when dealing with creatures of that type." },
+              { "title": "Natural Explorer", "description": "You are particularly familiar with one type of natural environment and are adept at traveling and surviving in such regions." }
+            ]
+          }
+        },
+        {
+          "key": "rogue",
+          "aliases": { "en": "Rogue", "pt": "Ladino", "es": "Pícaro", "fr": "Roublard" },
+          "fieldValues": {
+            "save_dexterity_proficient": true,
+            "save_intelligence_proficient": true,
+            "hit_dice": "1d8",
+            "class_abilities": [
+              { "title": "Expertise", "description": "You gain expertise in two of your skill proficiencies (or one skill and your thieves' tools), doubling your proficiency bonus for ability checks that use either." },
+              { "title": "Sneak Attack", "description": "You know how to strike subtly and exploit a foe's distraction, dealing extra damage once per turn when you have advantage or an ally is near your target." },
+              { "title": "Thieves' Cant", "description": "You've learned thieves' cant, a secret mix of dialect, jargon, and code that allows you to hide messages in seemingly normal conversation." }
+            ]
+          }
+        },
+        {
+          "key": "sorcerer",
+          "aliases": { "en": "Sorcerer", "pt": "Feiticeiro", "es": "Hechicero", "fr": "Sorcier" },
+          "fieldValues": {
+            "save_constitution_proficient": true,
+            "save_charisma_proficient": true,
+            "hit_dice": "1d6",
+            "spellcasting_ability": "Charisma",
+            "class_abilities": [
+              { "title": "Spellcasting", "description": "An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic, letting you cast sorcerer spells using Charisma as your spellcasting ability." },
+              { "title": "Sorcerous Origin", "description": "You choose a sorcerous origin describing the source of your innate magical power, such as draconic bloodline or wild magic, granting features at this and higher levels." }
+            ]
+          }
+        },
+        {
+          "key": "warlock",
+          "aliases": { "en": "Warlock", "pt": "Bruxo", "es": "Brujo", "fr": "Sorcier des Ombres" },
+          "fieldValues": {
+            "save_wisdom_proficient": true,
+            "save_charisma_proficient": true,
+            "hit_dice": "1d8",
+            "spellcasting_ability": "Charisma",
+            "class_abilities": [
+              { "title": "Otherworldly Patron", "description": "You have struck a bargain with an otherworldly being of your choice, such as a fiend or an archfey, who grants you magical abilities in exchange for service." },
+              { "title": "Pact Magic", "description": "Your arcane research and the magic bestowed on you by your patron have given you facility with spells, cast using a small number of recharging spell slots unique to warlocks." }
+            ]
+          }
+        },
+        {
+          "key": "wizard",
+          "aliases": { "en": "Wizard", "pt": "Mago", "es": "Mago", "fr": "Magicien" },
+          "fieldValues": {
+            "save_intelligence_proficient": true,
+            "save_wisdom_proficient": true,
+            "hit_dice": "1d6",
+            "spellcasting_ability": "Intelligence",
+            "class_abilities": [
+              { "title": "Spellcasting", "description": "As a student of arcane magic, you have a spellbook containing spells that show the first glimmerings of your true power, cast using Intelligence as your spellcasting ability." },
+              { "title": "Arcane Recovery", "description": "You have learned to regain some of your magical energy by studying your spellbook, recovering expended spell slots once per day during a short rest." }
+            ]
+          }
+        }
+      ],
+      "ancestry": [
+        {
+          "key": "dragonborn",
+          "aliases": { "en": "Dragonborn", "pt": "Draconato", "es": "Dracónido", "fr": "Drakéide" },
+          "fieldValues": {
+            "speed": 30,
+            "darkvision": 0,
+            "languages": ["Common", "Draconic"],
+            "racial_traits": [
+              { "title": "Ability Score Increase", "description": "Your Strength score increases by 2, and your Charisma score increases by 1." },
+              { "title": "Breath Weapon", "description": "You can use your action to exhale destructive energy in a line or cone, matching your draconic ancestry. Each creature in the area must make a saving throw or take damage of the associated type." },
+              { "title": "Damage Resistance", "description": "You have resistance to the damage type associated with your draconic ancestry." }
+            ]
+          }
+        },
+        {
+          "key": "dwarf",
+          "aliases": { "en": "Dwarf", "pt": "Anão", "es": "Enano", "fr": "Nain" },
+          "fieldValues": {
+            "speed": 25,
+            "darkvision": 60,
+            "languages": ["Common", "Dwarvish"],
+            "racial_traits": [
+              { "title": "Ability Score Increase", "description": "Your Constitution score increases by 2." },
+              { "title": "Dwarven Resilience", "description": "You have advantage on saving throws against poison, and you have resistance against poison damage." },
+              { "title": "Stonecunning", "description": "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient and add double your proficiency bonus to the check." }
+            ]
+          }
+        },
+        {
+          "key": "elf",
+          "aliases": { "en": "Elf", "pt": "Elfo", "es": "Elfo", "fr": "Elfe" },
+          "fieldValues": {
+            "speed": 30,
+            "darkvision": 60,
+            "languages": ["Common", "Elvish"],
+            "racial_traits": [
+              { "title": "Ability Score Increase", "description": "Your Dexterity score increases by 2." },
+              { "title": "Fey Ancestry", "description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep." },
+              { "title": "Trance", "description": "You don't need to sleep. Instead, you meditate deeply for 4 hours a day, gaining the same benefit a human gets from 8 hours of sleep." }
+            ]
+          }
+        },
+        {
+          "key": "gnome",
+          "aliases": { "en": "Gnome", "pt": "Gnomo", "es": "Gnomo", "fr": "Gnome" },
+          "fieldValues": {
+            "speed": 25,
+            "darkvision": 60,
+            "languages": ["Common", "Gnomish"],
+            "racial_traits": [
+              { "title": "Ability Score Increase", "description": "Your Intelligence score increases by 2." },
+              { "title": "Gnome Cunning", "description": "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic." }
+            ]
+          }
+        },
+        {
+          "key": "half_elf",
+          "aliases": { "en": "Half-Elf", "pt": "Meio-Elfo", "es": "Semielfo", "fr": "Demi-Elfe" },
+          "fieldValues": {
+            "speed": 30,
+            "darkvision": 60,
+            "languages": ["Common", "Elvish"],
+            "racial_traits": [
+              { "title": "Ability Score Increase", "description": "Your Charisma score increases by 2, and two other ability scores of your choice increase by 1." },
+              { "title": "Fey Ancestry", "description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep." },
+              { "title": "Skill Versatility", "description": "You gain proficiency in two skills of your choice." }
+            ]
+          }
+        },
+        {
+          "key": "half_orc",
+          "aliases": { "en": "Half-Orc", "pt": "Meio-Orc", "es": "Semiorco", "fr": "Demi-Orc" },
+          "fieldValues": {
+            "speed": 30,
+            "darkvision": 60,
+            "languages": ["Common", "Orc"],
+            "racial_traits": [
+              { "title": "Ability Score Increase", "description": "Your Strength score increases by 2, and your Constitution score increases by 1." },
+              { "title": "Relentless Endurance", "description": "When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. You can't use this feature again until you finish a long rest." },
+              { "title": "Savage Attacks", "description": "When you score a critical hit with a melee weapon attack, you can roll one additional weapon damage die and add it to the extra damage of the critical hit." }
+            ]
+          }
+        },
+        {
+          "key": "halfling",
+          "aliases": { "en": "Halfling", "pt": "Halfling", "es": "Mediano", "fr": "Halfelin" },
+          "fieldValues": {
+            "speed": 25,
+            "darkvision": 0,
+            "languages": ["Common", "Halfling"],
+            "racial_traits": [
+              { "title": "Ability Score Increase", "description": "Your Dexterity score increases by 2." },
+              { "title": "Lucky", "description": "When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll." },
+              { "title": "Brave", "description": "You have advantage on saving throws against being frightened." }
+            ]
+          }
+        },
+        {
+          "key": "human",
+          "aliases": { "en": "Human", "pt": "Humano", "es": "Humano", "fr": "Humain" },
+          "fieldValues": {
+            "speed": 30,
+            "darkvision": 0,
+            "languages": ["Common"],
+            "racial_traits": [
+              { "title": "Versatile", "description": "Humans gain a +1 bonus to all six ability scores, reflecting their adaptability and drive across the multiverse." }
+            ]
+          }
+        },
+        {
+          "key": "tiefling",
+          "aliases": { "en": "Tiefling", "pt": "Tiefling", "es": "Tiefling", "fr": "Tieffelin" },
+          "fieldValues": {
+            "speed": 30,
+            "darkvision": 60,
+            "languages": ["Common", "Infernal"],
+            "racial_traits": [
+              { "title": "Ability Score Increase", "description": "Your Intelligence score increases by 1, and your Charisma score increases by 2." },
+              { "title": "Hellish Resistance", "description": "You have resistance to fire damage." },
+              { "title": "Infernal Legacy", "description": "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast hellish rebuke once per long rest; at 5th level you can also cast darkness once per long rest." }
+            ]
+          }
+        }
+      ],
+      "background": [
+        {
+          "key": "acolyte",
+          "aliases": { "en": "Acolyte", "pt": "Acólito", "es": "Acólito", "fr": "Acolyte" },
+          "fieldValues": {
+            "skill_insight_proficient": true,
+            "skill_religion_proficient": true,
+            "background_feature": [
+              { "title": "Shelter of the Faithful", "description": "You and your companions can receive free healing and care at temples, shrines, and other established presences of your faith, and you have a network of connections among the faithful who can provide modest assistance." }
+            ]
+          }
+        },
+        {
+          "key": "criminal",
+          "aliases": { "en": "Criminal", "pt": "Criminoso", "es": "Criminal", "fr": "Criminel" },
+          "fieldValues": {
+            "skill_deception_proficient": true,
+            "skill_stealth_proficient": true,
+            "background_feature": [
+              { "title": "Criminal Contact", "description": "You have a reliable and trustworthy contact who acts as your liaison to a network of other criminals, keeping you informed about local criminal goings-on." }
+            ]
+          }
+        },
+        {
+          "key": "folk_hero",
+          "aliases": { "en": "Folk Hero", "pt": "Herói do Povo", "es": "Héroe del Pueblo", "fr": "Héros du Peuple" },
+          "fieldValues": {
+            "skill_animal_handling_proficient": true,
+            "skill_survival_proficient": true,
+            "background_feature": [
+              { "title": "Rustic Hospitality", "description": "Since you come from the common folk, you fit in among them with ease and can find a place to hide, rest, or recuperate among other commoners, unless you have shown yourself to be a danger to them." }
+            ]
+          }
+        },
+        {
+          "key": "noble",
+          "aliases": { "en": "Noble", "pt": "Nobre", "es": "Noble", "fr": "Noble" },
+          "fieldValues": {
+            "skill_history_proficient": true,
+            "skill_persuasion_proficient": true,
+            "background_feature": [
+              { "title": "Position of Privilege", "description": "People are inclined to think the best of you. You are welcomed by high society, and common folk try to accommodate you and avoid your displeasure." }
+            ]
+          }
+        },
+        {
+          "key": "sage",
+          "aliases": { "en": "Sage", "pt": "Sábio", "es": "Sabio", "fr": "Érudit" },
+          "fieldValues": {
+            "skill_arcana_proficient": true,
+            "skill_history_proficient": true,
+            "background_feature": [
+              { "title": "Researcher", "description": "When you attempt to learn or recall a piece of lore, if you don't know that information, you often know where and from whom you can obtain it." }
+            ]
+          }
+        },
+        {
+          "key": "soldier",
+          "aliases": { "en": "Soldier", "pt": "Soldado", "es": "Soldado", "fr": "Soldat" },
+          "fieldValues": {
+            "skill_athletics_proficient": true,
+            "skill_intimidation_proficient": true,
+            "background_feature": [
+              { "title": "Military Rank", "description": "You have a military rank from your career as a soldier, and soldiers loyal to your former organization still recognize your authority and influence." }
+            ]
+          }
+        }
+      ]
+    },
+    "presetCustomFieldSections": {
+      "class": { "title": "Class Features", "insertAfter": "identity" }
+    },
+    "itemTypes": [
+      {
+        "key": "weapon",
+        "label": "Weapon",
+        "fields": [
+          { "key": "name", "label": "Name", "type": "text", "required": true },
+          { "key": "attribute", "label": "Attribute", "type": "text" },
+          { "key": "range", "label": "Range", "type": "text" },
+          { "key": "damage_dice", "label": "Damage Dice", "type": "dice" },
+          { "key": "damage_type", "label": "Damage Type", "type": "text" },
+          { "key": "properties", "label": "Properties", "type": "multiselect", "options": ["Ammunition", "Finesse", "Heavy", "Light", "Loading", "Range", "Reach", "Special", "Thrown", "Two-Handed", "Versatile"] },
+          { "key": "weight", "label": "Weight", "type": "number" }
+        ],
+        "linkableFrom": ["weapon_loadout"]
+      },
+      {
+        "key": "armor",
+        "label": "Armor",
+        "fields": [
+          { "key": "name", "label": "Name", "type": "text", "required": true },
+          { "key": "armor_type", "label": "Armor Type", "type": "select", "options": ["Light", "Medium", "Heavy", "Shield"] },
+          { "key": "base_ac", "label": "Base AC", "type": "number", "min": 0 },
+          { "key": "dex_bonus_max", "label": "Dex Bonus Max", "type": "number" },
+          { "key": "strength_requirement", "label": "Strength Requirement", "type": "number", "min": 0, "default": 0 },
+          { "key": "stealth_disadvantage", "label": "Stealth Disadvantage", "type": "boolean", "default": false },
+          { "key": "weight", "label": "Weight", "type": "number" }
+        ],
+        "linkableFrom": ["armor_piece"]
+      },
+      {
+        "key": "gear",
+        "label": "Gear",
+        "fields": [
+          { "key": "name", "label": "Name", "type": "text", "required": true },
+          { "key": "weight", "label": "Weight", "type": "number" },
+          { "key": "quantity", "label": "Quantity", "type": "number", "default": 1 },
+          { "key": "value_gp", "label": "Value (gp)", "type": "number" }
+        ]
+      }
     ],
     "adversaryFields": [
       { "key": "character_name", "label": "Name", "type": "text", "section": "identity", "required": true },
