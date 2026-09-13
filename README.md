@@ -213,6 +213,7 @@ Every manifest is a single JSON object with one top-level key, `addon`:
 | `quickRolls` | `array<QuickRoll>` | max 20 | One-click roll shortcuts — see [§10](#10-quick-rolls). |
 | `integrations` | `array<Integration>` | max 5 | Outbound webhooks — requires `INTEGRATION` type + `integration:external` capability — see [§12](#12-integrations-integration-addons). |
 | `dependencies` | `array<Dependency>` | max 20 | Other addons yours depends on — see [§13](#13-dependencies). |
+| `characterFieldOverrides` | `array<CharacterFieldOverride>` | max 20 | Narrow/relax `min`/`max`/`default` on a `characterField` owned by an addon in your `dependencies` chain, without redeclaring it — see [§13](#13-dependencies). |
 | `enableSkillUse` | `boolean` | — | Enables the skill-use selector UI and realtime `skill:use` events for this campaign's composed schema. |
 
 All object schemas in the manifest use Zod's `.strict()` mode: **any key
@@ -533,10 +534,31 @@ PresetEntry = {
 
 PresetFieldValue =
   | Array<{ title: string; description: string }>   // max 20 — card-shaped values, e.g. class_abilities
+  | Array<{ title?: string; image: string }>         // max 20 — image_dossier entries, e.g. a class emblem
   | Array<string>                                     // max 50 — e.g. domains: ["blade", "valor"]
   | string | number | boolean                          // scalar direct write
   | Record<string, string | number | boolean>           // shallow-merge into an existing object field,
                                                            // e.g. hit_points: { max: 7 } merges into { current, max }
+```
+
+**Image dossier entries.** A preset can pin one of its own hosted reference
+images into an `image_dossier`-type field — e.g. every "Warrior" pick
+automatically adding the system's default warrior emblem to the sheet's
+dossier. `image` must be an `https://` URL your addon hosts; it's pasted
+into the dossier item as-is, never re-uploaded or copied into the
+platform's own storage. Like every other list-shaped field target,
+image_dossier entries are **appended**, not overwritten — a player's own
+uploaded photos are kept, and re-picking the same preset doesn't duplicate
+the emblem (deep-equal dedup):
+
+```json
+{
+  "key": "warrior",
+  "aliases": { "en": "Warrior" },
+  "fieldValues": {
+    "image_dossier": [{ "title": "Warrior Emblem", "image": "https://your-addon-host.example.com/warrior-emblem.png" }]
+  }
+}
 ```
 
 Presets are **concatenated, not overridden**, when multiple addons are
@@ -877,6 +899,42 @@ is not something your manifest can opt out of.
   well-known addon does not grant your addon any elevated capability or
   bypass its own independent validation.
 
+### 13.1 Overriding a dependency's characterField (`characterFieldOverrides`)
+
+An extension addon can't redeclare a `characterFields[]` key already owned
+by an addon it depends on — key conflicts are resolved "first addon wins"
+at compose time (see [§17](#17-addon-composition-multiple-active-addons)),
+so a duplicate key is simply dropped. To narrow or relax `min`/`max`/
+`default` on a field you don't own — e.g. an expansion that must allow a
+core ruleset's `level` field down to `0` — declare it instead:
+
+```ts
+characterFieldOverrides: [
+  { key: "level", min: 0 },
+]
+```
+
+```ts
+{
+  key: string;                          // must reference an existing characterField key
+  min?: number;
+  max?: number;
+  default?: string | number | boolean;
+}
+```
+
+- Max 20 entries.
+- **Requires at least one `dependencies` entry** — a manifest with
+  `characterFieldOverrides` but no `dependencies` fails validation. A
+  primary/core addon's own fields are already authoritative and never need
+  overriding.
+- Applied at compose time, after the normal `characterFields` merge (see
+  [§17](#17-addon-composition-multiple-active-addons)). A key that doesn't
+  resolve to an existing composed field (typo, dependency not installed) is
+  a silent no-op — it does not fail validation.
+- Only `min`/`max`/`default` can be overridden — the field's `type`,
+  `label`, `options`, etc. still come entirely from the addon that owns it.
+
 ---
 
 ## 14. Capabilities
@@ -995,6 +1053,7 @@ merges them with these rules:
 | Field | Merge rule |
 |---|---|
 | `characterFields` | First (primary/system) addon wins on key conflict; extra addons only add fields whose key isn't already claimed. |
+| `characterFieldOverrides` | Applied last, after the merge above — narrows/relaxes `min`/`max`/`default` on an already-composed field owned by another addon in the overriding addon's `dependencies` chain (see [§13.1](#131-overriding-a-dependencys-characterfield-characterfieldoverrides)). No-op for keys that didn't compose. |
 | `characterSections` | Appended in order by default, or spliced next to a target via `insertAfter`/`insertBefore` (see [§7.2](#72-extension-section-positioning)); extra-addon section IDs are prefixed `"<addon-slug>__<id>"` to avoid collisions; a section is dropped if none of its fields survived composition. |
 | `adversaryFields` / `adversarySections` | Same rules as above, independently. |
 | `itemTypes` | Seeded with the 5 system-default types (`default`/`weapon`/`armor`/`artifact`/`consumable`) as a baseline; the system addon may override any of those keys and add new ones, then first addon wins on key conflict for extras. Every resulting itemType gets a required `description` field auto-appended if it doesn't already declare one (see [§6.1](#61-item-types)). |
@@ -1101,6 +1160,7 @@ the whole manifest:
 - [ ] No regex-based validation fields anywhere in your manifest (the schema doesn't accept any — don't try to add custom pattern fields expecting the platform to run your regex)
 - [ ] If `license.type === "dpcgl"`: `monetized: false`, correct attribution fragment, `sourceUrl` set, `compatibilityStatement` contains "compatible"
 - [ ] `dependencies` ≤ 20, each `version` is a valid semver constraint, and no non-optional circular dependency exists
+- [ ] `characterFieldOverrides` (if present) ≤ 20 entries, and `dependencies` has at least one entry
 
 ---
 
