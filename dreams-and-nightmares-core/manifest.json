@@ -6,7 +6,7 @@
     "types": ["CORE", "RULES"],
     "author": "atelier.dev",
     "license": { "type": "original" },
-    "version": "1.2.0",
+    "version": "1.3.0",
     "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/dreams-and-nightmares/dreams-and-nightmares.webp",
     "thumbnailWideUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/dreams-and-nightmares/dreams-and-nightmares-landscape.webp",
     "description": "Core ruleset for the Dreams & Nightmares setting. Defines character schema, ability scores, combat stats, and standard dice mechanics.",
@@ -152,7 +152,11 @@
       { "key": "personality_traits", "type": "textarea", "label": "Personality Traits", "section": "personality" },
       { "key": "ideals", "type": "textarea", "label": "Ideals", "section": "personality" },
       { "key": "bonds", "type": "textarea", "label": "Bonds", "section": "personality" },
-      { "key": "flaws", "type": "textarea", "label": "Flaws", "section": "personality" }
+      { "key": "flaws", "type": "textarea", "label": "Flaws", "section": "personality" },
+      { "key": "backstory", "type": "textarea", "label": "Backstory", "section": "background" },
+      { "key": "connections", "type": "dynamic_list", "label": "Connections", "section": "background" },
+      { "key": "notes", "type": "textarea", "label": "Notes", "section": "background" },
+      { "key": "reference_images", "type": "image_dossier", "label": "Reference Images", "section": "dossier" }
     ],
     "diceDefinitions": [
       { "key": "d20_check", "label": "Ability Check (d20)", "notation": "1d20", "description": "Standard ability check or saving throw" },
@@ -183,7 +187,9 @@
       { "id": "currency", "title": "Currency", "fields": ["coins_copper", "coins_silver", "coins_electrum", "coins_gold", "coins_platinum"], "layout": "grid" },
       { "id": "inventory", "title": "Inventory", "fields": ["inventory_items"], "layout": "list" },
       { "id": "background_feature", "title": "Background Feature", "fields": ["background_feature"], "layout": "list" },
-      { "id": "personality", "title": "Personality", "fields": ["personality_traits", "ideals", "bonds", "flaws"], "layout": "list" }
+      { "id": "personality", "title": "Personality", "fields": ["personality_traits", "ideals", "bonds", "flaws"], "layout": "list" },
+      { "id": "background", "title": "Background", "layout": "list", "fields": ["backstory", "connections", "notes"] },
+      { "id": "dossier", "title": "Image Dossier", "layout": "list", "fields": ["reference_images"] }
     ],
     "presets": {
       "class": [
