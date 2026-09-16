@@ -153,9 +153,9 @@
       { "key": "ideals", "type": "textarea", "label": "Ideals", "section": "personality" },
       { "key": "bonds", "type": "textarea", "label": "Bonds", "section": "personality" },
       { "key": "flaws", "type": "textarea", "label": "Flaws", "section": "personality" },
-      { "key": "backstory", "type": "textarea", "label": "Backstory", "section": "background" },
-      { "key": "connections", "type": "dynamic_list", "label": "Connections", "section": "background" },
-      { "key": "notes", "type": "textarea", "label": "Notes", "section": "background" },
+      { "key": "backstory", "type": "textarea", "label": "Backstory", "section": "personality" },
+      { "key": "connections", "type": "dynamic_list", "label": "Connections", "section": "personality" },
+      { "key": "notes", "type": "textarea", "label": "Notes", "section": "personality" },
       { "key": "reference_images", "type": "image_dossier", "label": "Reference Images", "section": "dossier" }
     ],
     "diceDefinitions": [
@@ -187,8 +187,7 @@
       { "id": "currency", "title": "Currency", "fields": ["coins_copper", "coins_silver", "coins_electrum", "coins_gold", "coins_platinum"], "layout": "grid" },
       { "id": "inventory", "title": "Inventory", "fields": ["inventory_items"], "layout": "list" },
       { "id": "background_feature", "title": "Background Feature", "fields": ["background_feature"], "layout": "list" },
-      { "id": "personality", "title": "Personality", "fields": ["personality_traits", "ideals", "bonds", "flaws"], "layout": "list" },
-      { "id": "background", "title": "Background", "layout": "list", "fields": ["backstory", "connections", "notes"] },
+      { "id": "personality", "title": "Personality", "fields": ["personality_traits", "ideals", "bonds", "flaws", "backstory", "connections", "notes"], "layout": "list" },
       { "id": "dossier", "title": "Image Dossier", "layout": "list", "fields": ["reference_images"] }
     ],
     "presets": {
