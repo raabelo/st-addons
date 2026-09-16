@@ -354,6 +354,19 @@ to diverge over time — thresholds, tiers, action economy).
 }
 ```
 
+> **`characterSections` cap (20).** A mature CORE addon fills this up fast —
+> `dreams-and-nightmares-core` hit the cap adding just two new sections for
+> new fields. If you're at 20 and need to add fields that belong under a
+> new heading, don't create a new section: add the fields to an existing
+> section's `fields` array instead (e.g. append `backstory`/`connections`/
+> `notes` onto an existing `personality`/`background_feature`-style section
+> rather than spinning up a dedicated `background` section). Same cap and
+> the same fix applies to `adversarySections`. New fields alone are never a
+> breaking change (§18.1) — but shipping a manifest edit that pushes either
+> sections array past 20 **is** rejected outright at publish time with
+> `Array must contain at most 20 element(s)`, independent of the breaking-
+> change check.
+
 ### 5.4 Concrete example (from `generic-core/manifest.json`, real addon in this repo)
 
 ```json
