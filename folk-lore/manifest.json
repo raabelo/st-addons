@@ -21,10 +21,10 @@
     "presets": {
       "class": [
         {
-          "level": 0,
           "key": "villager",
           "aliases": { "en": "Villager", "pt": "Aldeão", "es": "Aldeano", "fr": "Villageois" },
           "fieldValues": {
+            "level": 0,
             "evasion": 5,
             "hit_points": { "max": 2 },
             "hope_ability": [
