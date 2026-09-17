@@ -1,0 +1,260 @@
+{
+  "addon": {
+    "slug": "folk-lore",
+    "name": "Folk Lore",
+    "version": "1.0.0",
+    "description": "An expansion of commoner classes for the Lastdream setting. Requires Lastdream Core. Adds a single Villager class with occupation subclasses — Butcher, Blacksmith, Farmer, Librarian, Lumberjack, Apothecary, Carpenter, Innkeeper, Messenger, Gravedigger, Cook, and Fisher — playable from level 0, before any adventuring levels, each with a simple Hope ability grounded in their trade.",
+    "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/folk-lore",
+    "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/folk-y",
+    "thumbnailWideUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/folk-x",
+    "author": "atelier.dev",
+    "license": { "type": "original" },
+    "types": ["RULES"],
+    "tags": ["fantasy", "lastdream", "commoners"],
+    "capabilities": ["character:read", "character:write"],
+    "dependencies": [
+      { "slug": "lastdream-core", "version": "^1.0.0" }
+    ],
+    "characterFieldOverrides": [
+      { "key": "level", "min": 0 }
+    ],
+    "presets": {
+      "class": [
+        {
+          "level": 0,
+          "key": "villager",
+          "aliases": { "en": "Villager", "pt": "Aldeão", "es": "Aldeano", "fr": "Villageois" },
+          "fieldValues": {
+            "evasion": 5,
+            "hit_points": { "max": 2 },
+            "hope_ability": [
+              { "title": "...", "description": "Spend a hope..." }
+            ],
+            "class_abilities": [
+              { "title": "A Trade for Every Trouble", "description": "When you Help an Ally, you can describe how your trade or years of everyday labor give you real, practical expertise in the task at hand. If the GM agrees your occupation makes the help genuinely credible, roll a d12 instead of a d6 as your advantage die." },
+              { "title": "When you know, you know", "description": "Due to the years you've spent doing what you do best, once per long rest when you use an Experience, you may mark a Stress Point to double your Experience bonus on the roll." }
+            ]
+          }
+        }
+      ],
+      "subclass": [
+        {
+          "key": "butcher",
+          "requiresClass": "villager",
+          "aliases": { "en": "Butcher", "pt": "Açougueiro", "es": "Carnicero", "fr": "Boucher" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Butcher Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Butcher.png" }],
+            "class_abilities": [
+              { "title": "Trained Eye", "description": "You can study a fresh wound and know exactly how close the wounded creature is to death." },
+              { "title": "Clean Cut", "description": "Once per short rest, when you make a damage roll against a wounded target with a bladed weapon, you can mark a Stress to add 1d6 to the roll, and 1d4 to the damage roll if it hits." }
+            ]
+          }
+        },
+        {
+          "key": "blacksmith",
+          "requiresClass": "villager",
+          "aliases": { "en": "Blacksmith", "pt": "Ferreiro", "es": "Herrero", "fr": "Forgeron" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Blacksmith Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Blacksmith.png" }],
+            "class_abilities": [
+              { "title": "Field Repair", "description": "Once per long rest, mark a Stress to repair pieces of damaged armors, restore two Armor Slots of any character or one Armor Slot of two different characters." },
+              { "title": "Forge Fix", "description": "Once per long rest, choose a mundane weapon or armor within reach and lend it a minor property until the end of the session or until anyone takes a short rest, whichever comes first: Par (this weapon's wielder deals +1 damage against Melee targets), Barreira (this armor grants +1 Armor Slot), or Alarmante (the wielder can mark 1 Stress to force a Melee adversary to retreat to a point within Close range)." }
+            ]
+          }
+        },
+        {
+          "key": "farmer",
+          "requiresClass": "villager",
+          "aliases": { "en": "Farmer", "pt": "Fazendeiro", "es": "Granjero", "fr": "Fermier" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Farmer Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Farmer.png" }],
+            "class_abilities": [
+              { "title": "Farmer's Sack", "description": "Once per session, spend 1 Hope to reach into your sack and pull out, your choice: sturdy rope enough to tie down almost anything; a handful of seeds that sprout in minutes; extra provisions to feed the group for one more day; a simple tool borrowed from a neighbor (return it later, or lose their trust); or a stubborn animal (goat, mule, angry hen) willing to help — or get in the way." }
+            ]
+          }
+        },
+        {
+          "key": "librarian",
+          "requiresClass": "villager",
+          "aliases": { "en": "Librarian", "pt": "Bibliotecário", "es": "Bibliotecario", "fr": "Bibliothécaire" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Librarian Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Librarian.png" }],
+            "class_abilities": [
+              { "title": "One More Page", "description": "Once per session, recall one useful fact, rumor, or record relevant to the situation at hand, just in time." },
+              { "title": "I've read it somewhere", "description": "Describe a book that you own (you can change the book you're carying once per session). You have advantage on all ability checks related to its subject if you have enough time to read some pages before acting. (You can own a number of books equal to your tier + 1)." }
+            ]
+          },
+          "customFields": [
+            {
+              "key": "librarian_books",
+              "label": "Librarian Books",
+              "type": "ability_card_list"
+            }
+          ]
+        },
+        {
+          "key": "lumberjack",
+          "requiresClass": "villager",
+          "aliases": { "en": "Lumberjack", "pt": "Lenhador", "es": "Leñador", "fr": "Bûcheron" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Lumberjack Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Lumberjack.png" }],
+            "class_abilities": [
+              { "title": "Steady Swing", "description": "When you make an attack roll with an axe, you can mark a Stress to reroll a 1 or 2 on a damage die (you can use this ability as much as you whant on the same roll as long as you have enough Stress Points)." },
+              { "title": "Steady Hands", "description": "You never drop a tool or piece of lumber you're carrying, no matter how hard you stumble or get shoved." }
+            ]
+          }
+        },
+        {
+          "key": "apothecary",
+          "requiresClass": "villager",
+          "aliases": { "en": "Apothecary", "pt": "Boticário", "es": "Boticario", "fr": "Apothicaire" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Apothecary Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Apothecary.png" }],
+            "class_abilities": [
+              { "title": "Field Remedy", "description": "Once per long rest, mark a Stress to clear a Hit Point on an ally within Close range." },
+              { "title": "Practiced Hands", "description": "You can identify common poisons, herbs, and remedies by sight or smell, and know how to prepare a basic potion (from this subclass list) given time and materials (you can prepare a number of potions equal to your tier + 1). Every potion also requires boiled water as a base ingredient, on top of whatever material its recipe lists." }
+            ],
+            "apothecary_potions_t0": [
+              { "title": "Weak Health Tonic", "description": "Clear 1 Hit Point. Material: common garden herbs." },
+              { "title": "Weak Vigor Tonic", "description": "Clear 1 Stress. Material: dried roots and salt." },
+              { "title": "Calming Tea", "description": "Treat your next roll with Fear as a roll with Hope instead (you don't gain a Hope from this roll). Material: wild chamomile leaves." }
+            ],
+            "apothecary_potions_t1": [
+              { "title": "Minor Health Potion", "description": "Clear 1d4 Hit Points. Material: 1 vial of blood from a freshly slain creature." },
+              { "title": "Minor Vigor Potion", "description": "Clear 1d4 Stress. Material: 1 creature bone." },
+              { "title": "Steadiness Potion", "description": "+1 on your next roll of a trait of your choice. Material: a common focus crystal (quartz) and an herb tied to that trait." }
+            ],
+            "apothecary_potions_t2": [
+              { "title": "Health Potion", "description": "Clear 1d4+1 Hit Points. Material: 2 vials of blood and 1 rare medicinal herb." },
+              { "title": "Vigor Potion", "description": "Clear 1d4+1 Stress. Material: 2 creature bones and tree resin." },
+              { "title": "Greater Steadiness Potion", "description": "+1 to a trait of your choice until your next rest. Material: a larger focus crystal and beast fat." }
+            ],
+            "apothecary_potions_t3": [
+              { "title": "Major Health Potion", "description": "Clear 1d4+2 Hit Points. Material: the heart of a dangerous beast, still fresh." },
+              { "title": "Major Vigor Potion", "description": "Clear 1d4+2 Stress. Material: marrow drawn from the bone of a dangerous beast." },
+              { "title": "Slumber Sap", "description": "Drink to gain a full night's Rest; clear all your Stress upon waking. Material: sap from a Slumber Tree, found only in ancient forests." }
+            ],
+            "apothecary_potions_t4": [
+              { "title": "Supreme Health Potion", "description": "Clear all your Hit Points. Material: blood from a slain legendary creature." },
+              { "title": "Supreme Vigor Potion", "description": "Clear all your Stress. Material: a bone from a slain legendary creature." },
+              { "title": "Apothecary's Feast", "description": "Clear all your Hit Points and Stress, and gain 1d4 Hope. Can only be prepared once per long rest. Material: a handful of gold dust plus one unique legendary ingredient (set with your GM)." }
+            ]
+          },
+          "customFields": [
+            {
+              "key": "apothecary_potions_t0",
+              "label": "Apothecary Potions T0",
+              "type": "ability_card_list"
+            },
+            {
+              "key": "apothecary_potions_t1",
+              "label": "Apothecary Potions T1",
+              "type": "ability_card_list"
+            },
+            {
+              "key": "apothecary_potions_t2",
+              "label": "Apothecary Potions T2",
+              "type": "ability_card_list"
+            },
+            {
+              "key": "apothecary_potions_t3",
+              "label": "Apothecary Potions T3",
+              "type": "ability_card_list"
+            },
+            {
+              "key": "apothecary_potions_t4",
+              "label": "Apothecary Potions T4",
+              "type": "ability_card_list"
+            }
+          ]
+        },
+        {
+          "key": "carpenter",
+          "requiresClass": "villager",
+          "aliases": { "en": "Carpenter", "pt": "Carpinteiro", "es": "Carpintero", "fr": "Charpentier" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Carpenter Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Carpenter.png" }],
+            "class_abilities": [
+              { "title": "Measure Twice", "description": "You can eyeball exact measurements and know instinctively whether a structure is sound or about to collapse." },
+              { "title": "Improvised Bracing", "description": "Once per short rest, when an ally within Close range would mark their last Hit Point or their last Armor Slot from an attack, you can mark a Stress to hastily brace them with scraps of wood, reducing the severity of that attack by one threshold." }
+            ]
+          }
+        },
+        {
+          "key": "innkeeper",
+          "requiresClass": "villager",
+          "aliases": { "en": "Innkeeper", "pt": "Estalajadeiro", "es": "Posadero", "fr": "Aubergiste" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Innkeeper Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Innkeeper.png" }],
+            "class_abilities": [
+              { "title": "On the House", "description": "Once per long rest, during a rest, mark a Stress to help an ally clear an additional Stress, beyond what the rest already clears." },
+              { "title": "Ear to the Room", "description": "You have a knack for hearing every conversation in a crowded room. Once per session, you can recall a specific detail from a conversation you overheard even if you weren't paying attention at the time." },
+              { "title": "Last Round", "description": "Before a long rest you help organize, ask each character a simple question (\"what's been eating at you today?\", \"what haven't you told the group?\"). Whoever answers in character, even briefly, clears 1 additional Stress during that rest." }
+            ]
+          }
+        },
+        {
+          "key": "messenger",
+          "requiresClass": "villager",
+          "aliases": { "en": "Messenger", "pt": "Mensageiro", "es": "Mensajero", "fr": "Messager" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Messenger Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Messenger.png" }],
+            "class_abilities": [
+              { "title": "Never Lost", "description": "You always know which direction you came from and can retrace any route you've traveled, even at night or in poor visibility." },
+              { "title": "Second Wind", "description": "Once per long rest, mark a Stress to ignore the effects of exhaustion and keep moving at full speed for the rest of the scene." }
+            ]
+          }
+        },
+        {
+          "key": "gravedigger",
+          "requiresClass": "villager",
+          "aliases": { "en": "Gravedigger", "pt": "Coveiro", "es": "Sepulturero", "fr": "Fossoyeur" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Gravedigger Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Gravedigger.png" }],
+            "class_abilities": [
+              { "title": "Unshaken", "description": "You've spent so much time with the dead that the presence of death doesn't disturb you any more. Once per long rest, mark a Stress to treat your next roll with Fear as a roll with Hope instead (you don't gain a Hope from this roll)." },
+              { "title": "Debt to the Grave", "description": "Whenever you personally dig a proper grave of someone you killed or saw dying (not something you can rush in the middle of a fight), put 1 Grave Debt marker on your character sheet (you can hold a number equal to your tier + 1). Spend 1 Grave Debt to choose one: clear 1 Fear from the GM's pool; ask the GM one yes-or-no question about someone who died nearby; or raise a cloud of grave dust and dirt over an adversary within Close range, blinding them until the end of their turn (they have disadvantage on attack rolls and can only see targets within Very Close range)." }
+            ]
+          }
+        },
+        {
+          "key": "cook",
+          "requiresClass": "villager",
+          "aliases": { "en": "Cook", "pt": "Cozinheiro", "es": "Cocinero", "fr": "Cuisinier" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Cook Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Cook.png" }],
+            "class_abilities": [
+              { "title": "A Taste of Home", "description": "Once per long rest, you can prepare a meal that reminds an ally of home; that ally clears an additional Stress during the rest." },
+              { "title": "Practiced Palate", "description": "You can identify any ingredient by taste or smell, and know instantly if food or drink has been poisoned or spoiled." }
+            ]
+          }
+        },
+        {
+          "key": "fisher",
+          "requiresClass": "villager",
+          "aliases": { "en": "Fisher", "pt": "Pescador", "es": "Pescador", "fr": "Pêcheur" },
+          "fieldValues": {
+            "reference_images": [{ "title": "Fisher Reference", "image": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/cards/subclasses/Fisher.png" }],
+            "class_abilities": [
+              { "title": "Reel It In", "description": "Once per short rest, mark a Stress to pull a struggling creature or object toward you from Close range using rope, net, line or a fishing pole without roll needed." },
+              { "title": "Catch of the Day", "description": "You gain an extra rest move, Fish: roll a d20 and check the result against this list." }
+            ],
+            "fisher_catches": [
+              { "title": "1-7: Nothing Much", "description": "Just weeds and an old boot. Not useful, but it makes for a good story later." },
+              { "title": "8-14: A Handful of Coins", "description": "Just a handful of coins. Who knows who threw it away?" },
+              { "title": "15-19: A Fat, Oily Catch", "description": "A rare, rich fish, packed with more nourishment than anything you've eaten in a while. Eat it to gain +1 to a trait of your choice until your next rest." },
+              { "title": "20: Something Bites Back", "description": "A strange creature, small (or not) and maybe harmless, latches onto your line. What it wants is up to the GM." }
+            ]
+          },
+          "customFields": [
+            {
+              "key": "fisher_catches",
+              "label": "Fisher Catches",
+              "type": "ability_card_list"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
