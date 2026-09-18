@@ -2,7 +2,7 @@
   "addon": {
     "slug": "folk-lore",
     "name": "Folk Lore",
-    "version": "1.0.0",
+    "version": "1.0.5",
     "description": "An expansion of commoner classes for the Lastdream setting. Requires Lastdream Core. Adds a single Villager class with occupation subclasses — Butcher, Blacksmith, Farmer, Librarian, Lumberjack, Apothecary, Carpenter, Innkeeper, Messenger, Gravedigger, Cook, and Fisher — playable from level 0, before any adventuring levels, each with a simple Hope ability grounded in their trade.",
     "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/folk-lore",
     "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/folk-y",
@@ -16,7 +16,8 @@
       { "slug": "lastdream-core", "version": "^1.0.0" }
     ],
     "characterFieldOverrides": [
-      { "key": "level", "min": 0 }
+      { "key": "level", "min": 0 },
+      { "key": "tier", "min": 0 }
     ],
     "presets": {
       "class": [
@@ -25,6 +26,7 @@
           "aliases": { "en": "Villager", "pt": "Aldeão", "es": "Aldeano", "fr": "Villageois" },
           "fieldValues": {
             "level": 0,
+            "tier": 0,
             "evasion": 5,
             "hit_points": { "max": 2 },
             "hope_ability": [
