@@ -2,7 +2,7 @@
   "addon": {
     "slug": "folk-lore",
     "name": "Folk Lore",
-    "version": "1.0.5",
+    "version": "1.1.0",
     "description": "An expansion of commoner classes for the Lastdream setting. Requires Lastdream Core. Adds a single Villager class with occupation subclasses — Butcher, Blacksmith, Farmer, Librarian, Lumberjack, Apothecary, Carpenter, Innkeeper, Messenger, Gravedigger, Cook, and Fisher — playable from level 0, before any adventuring levels, each with a simple Hope ability grounded in their trade.",
     "repositoryUrl": "https://github.com/raabelo/st-addons/tree/main/folk-lore",
     "thumbnailUrl": "https://ik.imagekit.io/atelierdev/atelier/st-addons/folk-lore/folk-y",
@@ -30,7 +30,7 @@
             "evasion": 5,
             "hit_points": { "max": 2 },
             "hope_ability": [
-              { "title": "...", "description": "Spend a hope..." }
+              { "title": "There's Always a Way", "description": "Spend a Hope to reroll a single die on a roll that used an Experience." }
             ],
             "class_abilities": [
               { "title": "A Trade for Every Trouble", "description": "When you Help an Ally, you can describe how your trade or years of everyday labor give you real, practical expertise in the task at hand. If the GM agrees your occupation makes the help genuinely credible, roll a d12 instead of a d6 as your advantage die." },
